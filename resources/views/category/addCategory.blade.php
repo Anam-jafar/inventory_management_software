@@ -1,5 +1,12 @@
 @extends('layouts.template')
 @section('content')
+@if ($errors->any())
+    @foreach ($errors->all() as $error)
+        @php
+            notify()->error($error, 'Failed');
+        @endphp
+    @endforeach
+@endif
 <div class="row">
     <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
@@ -26,12 +33,10 @@
 
             <div class="row justify-content-end">
                 <div class="col-auto">
-                    <button type="submit" class="btn btn-rounded btn-success btn-lg">
-                        <i class="mdi mdi-plus"></i> Add
-                    </button>
+                    <a href="{{route('allCategory')}}" class="btn btn-rounded btn-danger btn-lg">Cancel</a>
                 </div>
                 <div class="col-auto">
-                    <button class="btn btn-rounded btn-danger btn-lg">Cancel</button>
+                    <button type="submit" class="btn btn-rounded btn-success btn-lg"><i class="mdi mdi-plus"></i> Add</button>
                 </div>
             </div>
 

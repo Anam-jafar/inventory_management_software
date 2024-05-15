@@ -59,6 +59,7 @@
                     @endforeach
                 </tbody>
             </table>
+            <br>
             {{ $categories->links('vendor.pagination.bootstrap-4') }} <!-- Pagination Links with Bootstrap styling -->
         </div>
     </div>
