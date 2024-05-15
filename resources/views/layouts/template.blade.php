@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="{{asset('materials/assets/css/style.css')}}">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="{{asset('materials/assets/images/favicon.png')}}" />
+    <link rel="stylesheet" href="resources\css\app.css">
   </head>
   <body>
     <div class="container-scroller">
@@ -266,6 +267,21 @@
                 <span class="menu-title">Dashboard</span>
               </a>
             </li>
+            <!-- Category -->
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                <span class="icon-bg"><i class="mdi menu-icon mdi-format-list-bulleted-type"></i></span>
+                <span class="menu-title">Category</span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="ui-basic">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="{{route('allCategory')}}">Categories List</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="{{route('addCategory')}}">Add Category</a></li>
+                </ul>
+              </div>
+            </li>
+            <!-- Category end -->
             <li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                 <span class="icon-bg"><i class="mdi mdi-crosshairs-gps menu-icon"></i></span>

@@ -14,7 +14,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        config(['status' => [
+            'active' => 1,
+            'inactive' => 0
+        ]]);
+        config(['deleted' => 1]);
     }
 
     /**
@@ -25,5 +29,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+
     }
 }
