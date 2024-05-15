@@ -10,10 +10,26 @@ class CategoryController extends Controller
 {
     public function allCategory(Request $request)
     {
+        $query = $request->input('query');
+    
+        // Initialize $perPage with a default value of 5 if not present in the request
         $perPage = $request->input('perPage', 5);
-        $categories = Category::where('deleted', '!=', config('deleted'))->latest()->paginate($perPage);
-        return view('category.allCategory', compact('categories'));
+    
+        // Initialize the query builder without any search filter
+        $categoriesQuery = Category::where('deleted', '!=', config('deleted'))
+                                    ->latest();
+    
+        // Apply search filter if query is present
+        if ($query) {
+            $categoriesQuery->where('name', 'like', '%' . $query . '%');
+        }
+    
+        // Retrieve categories with pagination
+        $categories = $categoriesQuery->paginate($perPage);
+    
+        return view('category.allCategory', compact('categories', 'query', 'perPage'));
     }
+    
     
     
 
