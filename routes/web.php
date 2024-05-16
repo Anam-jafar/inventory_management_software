@@ -3,7 +3,9 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\EmployeeController;
 use App\Models\Category;
+use App\Models\Employee;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,6 +45,14 @@ Route::controller(ProductController::class)->group(function (){
     Route::match(['get', 'post'],'/add-product', 'addProduct')->name('addProduct');
     Route::match(['get', 'post'], '/edit-product/{id}', 'editProduct')->name('editProduct');
     Route::get('/delete-product/{id}', 'deleteProduct')->name('deleteProduct');
+});
+
+Route::controller(EmployeeController::class)->group(function (){
+    Route::get('/employee-list', 'allEmployee')->name('allEmployee');
+    Route::match(['get', 'post'],'/add-employee', 'addEmployee')->name('addEmployee');
+    Route::match(['get', 'post'], '/edit-employee/{id}', 'editEmployee')->name('editEmployee');
+    Route::get('/delete-employee/{id}', 'deleteEmployee')->name('deleteEmployee');
+    Route::get('/view-employee/{id}', 'viewEmployee')->name('viewEmployee');
 });
 
 require __DIR__.'/auth.php';

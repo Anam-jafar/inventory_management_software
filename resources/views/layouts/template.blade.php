@@ -18,6 +18,7 @@
     <!-- endinject -->
     <!-- Layout styles -->
     <link rel="stylesheet" href="{{asset('materials/assets/css/style.css')}}">
+    <link rel="stylesheet" href="resources\css\app.css">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="{{asset('materials/assets/images/favicon.png')}}" />
     <link rel="stylesheet" href="resources\css\app.css">
@@ -294,6 +295,25 @@
               </div>
             </li>
             <!-- Product end -->
+
+            <!-- Employee -->
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+                <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
+                <span class="menu-title">Employee</span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="auth">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="{{route('allEmployee')}}"> Employee List </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="{{route('addEmployee')}}"> Add Employee </a></li>
+                  <!-- <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li> -->
+                </ul>
+              </div>
+            </li>
+            <!-- Employee end-->
             <li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                 <span class="icon-bg"><i class="mdi mdi-crosshairs-gps menu-icon"></i></span>

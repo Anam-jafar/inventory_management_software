@@ -4,11 +4,11 @@
 <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Product list</h4>
+            <h4 class="card-title">Employee list</h4>
             <div class="row mb-3">
                 <!-- Items per page dropdown -->
                 <div class="col-md-2">
-                    <form action="{{ route('allProduct') }}" method="GET" class="form-inline">
+                    <form action="{{ route('allEmployee') }}" method="GET" class="form-inline">
                         <label for="perPage" class="me-2">Items per page:</label>
                         <div class="row align-items-center">
                             <div class="col-md-auto pe-0">
@@ -27,9 +27,9 @@
                 <div class="col-md-10 justify-content-end d-flex">
                     <div class="row align-items-center">
                         <div class="col-md-auto pe-0">
-                        <form action="{{ route('allProduct') }}" method="GET" class="form-inline">
+                        <form action="{{ route('allEmployee') }}" method="GET" class="form-inline">
                         
-                            <input type="text" name="query" value="{{ request()->input('query') }}" class="form-control me-2" placeholder="Search Product">
+                            <input type="text" name="query" value="{{ request()->input('query') }}" class="form-control me-2" placeholder="Search Employee">
                         </div>
                         <div class="col-md-auto ps-0">
                             <button type="submit" class="btn btn-outline-light btn-lg">Search</button>
@@ -45,33 +45,27 @@
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Category</th>
-                        <th>Status</th>
+                        <th>Salary</th>
+                        <th>Joined At</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($products as $product)
+                    @foreach($employees as $employee)
                     <tr>
-                        <td>{{ $product->name }}</td>
-                        <td>{{ $product->price }}</td>
-                        <td>{{ $product->quantity }}</td>
-                        <td>{{ $product->category->name }}</td>
-                        <td>
-                            <label class="badge badge-{{ $product->status ? 'success' : 'danger' }}">
-                                {{ $product->status ? 'Active' : 'Inactive' }}
-                            </label>
-                        </td>
+                        <td>{{ $employee->name }}</td>
+                        <td>{{ $employee->salary }}</td>
+                        <td>{{ $employee->joined_at }}</td>
+
                         <td>
                             <div class="dropdown dropdown-arrow-none">
                                 <button class="btn p-0 text-dark dropdown-toggle" type="button" id="dropdownMenuIconButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="mdi mdi-dots-vertical"></i>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuIconButton1">
-                                    <a class="dropdown-item" href="{{ route('editProduct', $product->id) }}"><i class="mdi mdi-border-color"></i> Update</a>
-                                    <a class="dropdown-item" href="{{ route('deleteProduct', $product->id) }}"><i class="mdi mdi-delete"></i> Delete</a>
+                                    <a class="dropdown-item" href="{{ route('viewEmployee', $employee->id) }}"><i class="mdi  mdi-eye-circle"></i> View</a>
+                                    <a class="dropdown-item" href="{{ route('editEmployee', $employee->id) }}"><i class="mdi mdi-border-color"></i> Update</a>
+                                    <a class="dropdown-item" href="{{ route('deleteEmployee', $employee->id) }}"><i class="mdi mdi-delete"></i> Delete</a>
                                 </div>
                             </div>
                         </td>
@@ -81,7 +75,7 @@
             </table>
             <br>
             <!-- Pagination Links -->
-            {{ $products->appends(['query' => request()->input('query'), 'perPage' => request()->input('perPage')])->links('vendor.pagination.bootstrap-4') }}
+            {{ $employees->appends(['query' => request()->input('query'), 'perPage' => request()->input('perPage')])->links('vendor.pagination.bootstrap-4') }}
         </div>
     </div>
 </div>
