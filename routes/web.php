@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,13 @@ Route::controller(CategoryController::class)->group(function (){
     Route::match(['get', 'post'],'/add-category', 'addCategory')->name('addCategory');
     Route::match(['get', 'post'], '/edit-category/{id}', 'editCategory')->name('editCategory');
     Route::get('/delete-category/{id}', 'deleteCategory')->name('deleteCategory');
+});
+
+Route::controller(ProductController::class)->group(function (){
+    Route::get('/product-list', 'allProduct')->name('allProduct');
+    Route::match(['get', 'post'],'/add-product', 'addProduct')->name('addProduct');
+    Route::match(['get', 'post'], '/edit-product/{id}', 'editProduct')->name('editProduct');
+    Route::get('/delete-product/{id}', 'deleteProduct')->name('deleteProduct');
 });
 
 require __DIR__.'/auth.php';

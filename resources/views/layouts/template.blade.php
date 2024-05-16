@@ -278,6 +278,22 @@
               </div>
             </li>
             <!-- Category end -->
+
+            <!-- Product -->
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                <span class="icon-bg"><i class="mdi menu-icon mdi-format-list-bulleted-type"></i></span>
+                <span class="menu-title">Product</span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="ui-basic">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="{{route('allProduct')}}">Product List</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="{{route('addProduct')}}">Add Product</a></li>
+                </ul>
+              </div>
+            </li>
+            <!-- Product end -->
             <li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                 <span class="icon-bg"><i class="mdi mdi-crosshairs-gps menu-icon"></i></span>
