@@ -18,10 +18,9 @@
     <!-- endinject -->
     <!-- Layout styles -->
     <link rel="stylesheet" href="{{asset('materials/assets/css/style.css')}}">
-    <link rel="stylesheet" href="resources\css\app.css">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="{{asset('materials/assets/images/favicon.png')}}" />
-    <link rel="stylesheet" href="resources\css\app.css">
+    <link rel="stylesheet" href="{{asset('custom/css/custom.css')}}">
     @notifyCss
   </head>
   <body>
@@ -455,6 +454,7 @@
     <!-- endinject -->
     <!-- Custom js for this page -->
     <script src="{{asset('materials/assets/js/dashboard.js')}}"></script>
+    <script src="{{asset('custom/js/custom.js')}}"></script>
     <!-- End custom js for this page -->
     @notifyJs
   </body>
