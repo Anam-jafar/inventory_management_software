@@ -12,20 +12,20 @@ class CustomerController extends Controller
         $query = $request->input('query');
         $perPage = $request->input('perPage', 5);
 
-        $employeesQuery = Customer::where('deleted', '!=', config('deleted'))->latest();
+        $customersQuery = Customer::where('deleted', '!=', config('deleted'))->latest();
 
         if($query){
-            $employeesQuery->where('name', 'like', '%'.$query.'%');
+            $customersQuery->where('name', 'like', '%'.$query.'%');
         }
 
-        $employees = $employeesQuery->paginate($perPage);
-        return view('customer.allCustomer', compact('employees', 'query', 'perPage'));
+        $customers = $customersQuery->paginate($perPage);
+        return view('customer.allCustomer', compact('customers', 'query', 'perPage'));
     }
 
     public function viewCustomer($id = null){
-        $employee = Customer::find($id);
+        $customer = Customer::find($id);
 
-        return view('customer.viewCustomer', compact('employee'));
+        return view('customer.viewCustomer', compact('customer'));
     }
     
     
@@ -43,9 +43,11 @@ class CustomerController extends Controller
                     'regex:/^(\+?[0-9]{13}|[0-9]{11})$/'
                 ],
                 'due' => [
+                    'numeric',
                     'min:0'
                 ],
                 'total_invoiced_amount' => [
+                    'numeric',
                     'min:0'
                 ],
             ], [
@@ -72,7 +74,7 @@ class CustomerController extends Controller
 
             if($customer->save()){
                 notify()->success('Customer info saved successfully', 'Added') ;
-                return redirect()->route('allEmployee');
+                return redirect()->route('allCustomer');
             }else{
                 notify()->error('Customer info cannot be saved', 'Failed') ;
             }
@@ -97,9 +99,11 @@ class CustomerController extends Controller
                     'regex:/^(\+?[0-9]{13}|[0-9]{11})$/'
                 ],
                 'due' => [
+                    'numeric',
                     'min:0'
                 ],
                 'total_invoiced_amount' => [
+                    'numeric',
                     'min:0'
                 ],
             ], [
@@ -125,7 +129,7 @@ class CustomerController extends Controller
 
             if($customer->save()){
                 notify()->success('Customer info updated successfully', 'Updated') ;
-                return redirect()->route('allEmployee');
+                return redirect()->route('allCustomer');
             }else{
                 notify()->error('Customer info cannot be updated', 'Failed') ;
             }

@@ -14,6 +14,6 @@ class Customer extends Model
         'contact',
         'location',
         'due',
-        'total_invoiced_ammount'
+        'total_invoiced_amount'
     ];
 }

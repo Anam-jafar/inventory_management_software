@@ -16,19 +16,19 @@
                 <h4 class="card-title">Customer Details</h4>
                 <dl class="row">
                     <dt class="col-sm-4">Name:</dt>
-                    <dd class="col-sm-8">{{ $employee->name }}</dd>
+                    <dd class="col-sm-8">{{ $customer->name }}</dd>
                     
                     <dt class="col-sm-4">Contact:</dt>
-                    <dd class="col-sm-8">{{ $employee->contact }}</dd>
+                    <dd class="col-sm-8">{{ $customer->contact }}</dd>
                     
                     <dt class="col-sm-4">Total Invoiced Amount:</dt>
-                    <dd class="col-sm-8">{{ $employee->total_invoiced_amount }}</dd>
+                    <dd class="col-sm-8">{{ $customer->total_invoiced_amount }}</dd>
 
                     <dt class="col-sm-4">Total Due:</dt>
-                    <dd class="col-sm-8">{{ $employee->due }}</dd>
+                    <dd class="col-sm-8">{{ $customer->due }}</dd>
                     
                     <!-- <dt class="col-sm-4">Employment Duration:</dt>
-                    <dd class="col-sm-8">{{ \Carbon\Carbon::parse($employee->joined_at)->diffInDays(\Carbon\Carbon::now()) }} days</dd> -->
+                    <dd class="col-sm-8">{{ \Carbon\Carbon::parse($customer->joined_at)->diffInDays(\Carbon\Carbon::now()) }} days</dd> -->
                 </dl>
             </div>
         </div>

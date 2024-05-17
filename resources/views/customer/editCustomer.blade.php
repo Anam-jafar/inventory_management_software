@@ -33,11 +33,11 @@
             <div class="form-group row">
                 <label for="contact" class="col-sm-3 col-form-label">Total Invoiced Amount</label>
                 <div class="col-sm-3">
-                    <input type="text" class="form-control" id="contact" value="{{ $customer->total_invoiced_amount }}" name="total_invoiced_amount">
+                    <input type="number" class="form-control" id="contact" value="{{ $customer->total_invoiced_amount }}" name="total_invoiced_amount">
                 </div>
                 <label for="nid" class="col-sm-3 col-form-label">Due</label>
                 <div class="col-sm-3">
-                    <input type="text" class="form-control" id="nid" value="{{ $customer->due }}" name="due">
+                    <input type="number" class="form-control" id="nid" value="{{ $customer->due }}" name="due">
                 </div>
             </div>
 

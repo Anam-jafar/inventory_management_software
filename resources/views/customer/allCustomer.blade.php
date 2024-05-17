@@ -29,7 +29,7 @@
                         <div class="col-md-auto pe-0">
                         <form action="{{ route('allCustomer') }}" method="GET" class="form-inline">
                         
-                            <input type="text" name="query" value="{{ request()->input('query') }}" class="form-control me-2" placeholder="Search Employee">
+                            <input type="text" name="query" value="{{ request()->input('query') }}" class="form-control me-2" placeholder="Search customer">
                         </div>
                         <div class="col-md-auto ps-0">
                             <button type="submit" class="btn btn-outline-light btn-lg">Search</button>
@@ -52,12 +52,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($employees as $employee)
+                    @foreach($customers as $customer)
                     <tr>
-                        <td>{{ $employee->name }}</td>
-                        <td>{{ $employee->contact }}</td>
-                        <td>{{ $employee->total_invoiced_amount }}</td>
-                        <td>{{ $employee->due }}</td>
+                        <td>{{ $customer->name }}</td>
+                        <td>{{ $customer->contact }}</td>
+                        <td>{{ $customer->total_invoiced_amount }}</td>
+                        <td>{{ $customer->due }}</td>
 
                         <td>
                             <div class="dropdown dropdown-arrow-none">
@@ -65,9 +65,9 @@
                                     <i class="mdi mdi-dots-vertical"></i>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuIconButton1">
-                                    <a class="dropdown-item" href="{{ route('viewCustomer', $employee->id) }}"><i class="mdi  mdi-eye-circle"></i> View</a>
-                                    <a class="dropdown-item" href="{{ route('editCustomer', $employee->id) }}"><i class="mdi mdi-border-color"></i> Update</a>
-                                    <a class="dropdown-item" href="{{ route('deleteCustomer', $employee->id) }}"><i class="mdi mdi-delete"></i> Delete</a>
+                                    <a class="dropdown-item" href="{{ route('viewCustomer', $customer->id) }}"><i class="mdi  mdi-eye-circle"></i> View</a>
+                                    <a class="dropdown-item" href="{{ route('editCustomer', $customer->id) }}"><i class="mdi mdi-border-color"></i> Update</a>
+                                    <a class="dropdown-item" href="{{ route('deleteCustomer', $customer->id) }}"><i class="mdi mdi-delete"></i> Delete</a>
                                 </div>
                             </div>
                         </td>
@@ -77,7 +77,7 @@
             </table>
             <br>
             <!-- Pagination Links -->
-            {{ $employees->appends(['query' => request()->input('query'), 'perPage' => request()->input('perPage')])->links('vendor.pagination.bootstrap-4') }}
+            {{ $customers->appends(['query' => request()->input('query'), 'perPage' => request()->input('perPage')])->links('vendor.pagination.bootstrap-4') }}
         </div>
     </div>
 </div>
