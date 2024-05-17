@@ -4,8 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EmployeeController;
-use App\Models\Category;
-use App\Models\Employee;
+use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -53,6 +52,14 @@ Route::controller(EmployeeController::class)->group(function (){
     Route::match(['get', 'post'], '/edit-employee/{id}', 'editEmployee')->name('editEmployee');
     Route::get('/delete-employee/{id}', 'deleteEmployee')->name('deleteEmployee');
     Route::get('/view-employee/{id}', 'viewEmployee')->name('viewEmployee');
+});
+
+Route::controller(CustomerController::class)->group(function (){
+    Route::get('/customer-list', 'allCustomer')->name('allCustomer');
+    Route::match(['get', 'post'],'/add-customer', 'addCustomer')->name('addCustomer');
+    Route::match(['get', 'post'], '/edit-customer/{id}', 'editCustomer')->name('editCustomer');
+    Route::get('/delete-customer/{id}', 'deleteEmployee')->name('deleteCustomer');
+    Route::get('/view-customer/{id}', 'viewCustomer')->name('viewCustomer');
 });
 
 require __DIR__.'/auth.php';
