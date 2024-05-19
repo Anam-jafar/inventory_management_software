@@ -325,13 +325,27 @@
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="{{route('allCustomer')}}"> Customer List </a></li>
                   <li class="nav-item"> <a class="nav-link" href="{{route('addCustomer')}}"> Add Customer </a></li>
-                  <!-- <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li> -->
                 </ul>
               </div>
             </li>
             <!-- Customer end-->
+
+            <!-- Supplier -->
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+                <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
+                <span class="menu-title">Supplier</span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="auth">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="{{route('allCustomer')}}"> Customer List </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="{{route('addSupplier')}}"> Add Supplier </a></li>
+                </ul>
+              </div>
+            </li>
+            <!-- Supplier end-->
+
             <li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                 <span class="icon-bg"><i class="mdi mdi-crosshairs-gps menu-icon"></i></span>
