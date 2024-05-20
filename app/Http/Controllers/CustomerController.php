@@ -139,7 +139,7 @@ class CustomerController extends Controller
         }
     }
 
-    public function deleteEmployee($id = null){
+    public function deleteCustomer($id = null){
         $customer = Customer::find($id);
         $customer->deleted = config('deleted');
         if($customer->save()){

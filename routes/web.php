@@ -59,12 +59,16 @@ Route::controller(CustomerController::class)->group(function (){
     Route::get('/customer-list', 'allCustomer')->name('allCustomer');
     Route::match(['get', 'post'],'/add-customer', 'addCustomer')->name('addCustomer');
     Route::match(['get', 'post'], '/edit-customer/{id}', 'editCustomer')->name('editCustomer');
-    Route::get('/delete-customer/{id}', 'deleteEmployee')->name('deleteCustomer');
+    Route::get('/delete-customer/{id}', 'deleteCustomer')->name('deleteCustomer');
     Route::get('/view-customer/{id}', 'viewCustomer')->name('viewCustomer');
 });
 
 Route::controller(SupplierController::class)->group(function (){
     Route::match(['get', 'post'], '/add-supplier', 'addSupplier')->name('addSupplier');
+    Route::match(['get', 'post'], '/edit-supplier/{id}', 'editSupplier')->name('editSupplier');
+    Route::get('/supplier-list', 'allSupplier')->name('allSupplier');
+    Route::get('/view-supplier/{id}', 'viewSupplier')->name('viewSupplier');
+    Route::get('/delete-supplier/{id}', 'deleteSupplier')->name('deleteSupplier');
 });
 
 require __DIR__.'/auth.php';

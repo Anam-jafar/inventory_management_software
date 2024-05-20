@@ -339,7 +339,7 @@
               </a>
               <div class="collapse" id="auth">
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="{{route('allCustomer')}}"> Customer List </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="{{route('allSupplier')}}"> Supplier List </a></li>
                   <li class="nav-item"> <a class="nav-link" href="{{route('addSupplier')}}"> Add Supplier </a></li>
                 </ul>
               </div>
