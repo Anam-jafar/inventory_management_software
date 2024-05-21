@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -69,6 +70,12 @@ Route::controller(SupplierController::class)->group(function (){
     Route::get('/supplier-list', 'allSupplier')->name('allSupplier');
     Route::get('/view-supplier/{id}', 'viewSupplier')->name('viewSupplier');
     Route::get('/delete-supplier/{id}', 'deleteSupplier')->name('deleteSupplier');
+});
+
+Route::controller(OrderController::class)->group(function (){
+    Route::match(['get', 'post'], '/add-order', 'addOrder')->name('addOrder');
+    Route::get('/view-order/{id}', 'viewOrder')->name('viewOrder');
+
 });
 
 require __DIR__.'/auth.php';

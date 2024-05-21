@@ -13,6 +13,9 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+    public function orderitem(){
+        return $this->hasOne(OrderItem::class);
+    }
 
     protected $fillable = [
         'name',
