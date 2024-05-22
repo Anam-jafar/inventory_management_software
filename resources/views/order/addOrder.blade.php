@@ -17,21 +17,24 @@
                 <form class="forms-sample" method="POST" enctype="multipart/form-data" id="createOrderForm">
                     @csrf
                     <div id="order-items">
-                        <div class="form-group row order-item">
-                            <label for="product" class="col-sm-3 col-form-label">Product</label>
-                            <div class="col-sm-6">
-                                <select class="form-control product-select" id="product" name="products[]">
-                                    <option value="">Choose product</option>
-                                    @foreach($products as $product)
-                                        <option value="{{ $product->id }}" data-price="{{ $product->price }}">{{ $product->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <label for="quantity" class="col-sm-1 col-form-label">Quantity</label>
-                            <div class="col-sm-2">
-                                <input type="number" class="form-control quantity-input" id="quantity" name="quantities[]" placeholder="Quantity">
-                            </div>
-                        </div>
+                    <div class="form-group row order-item">
+    <label for="product" class="col-sm-3 col-form-label">Product</label>
+    <div class="col-sm-6">
+        <select class="form-control product-select" id="product" name="products[]">
+            <option value="">Choose product</option>
+            @foreach($products as $product)
+                <option value="{{ $product->id }}" data-price="{{ $product->price }}" data-available-quantity="{{ $product->quantity }}">{{ $product->name }}</option>
+            @endforeach
+        </select>
+    </div>
+    <label for="quantity" class="col-sm-1 col-form-label">Quantity</label>
+    <div class="col-sm-2">
+        <input type="number" class="form-control quantity-input" id="quantity" name="quantities[]" placeholder="Quantity">
+    </div>
+    <div class="col-sm-12">
+        <span class="text-danger error-message" style="display: none;">Quantity needs to be less than or equal to available quantity.</span>
+    </div>
+</div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
@@ -104,7 +107,7 @@
                     </div>
                     <div class="row justify-content-end">
                         <div class="col-auto">
-                            <button type="submit" class="btn btn-rounded btn-success btn-lg"><i class="mdi mdi-content-save"></i> Save</button>
+                            <button type="submit" class="btn btn-rounded btn-success btn-lg " id="saveButton"><i class="mdi mdi-content-save"></i> Save</button>
                             <button type="button" class="btn btn-rounded btn-primary btn-lg" id="printOrder"><i class="mdi mdi-printer"></i> Print</button>
                         </div>
                     </div>
@@ -115,6 +118,40 @@
 </div>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const productSelects = document.querySelectorAll('.product-select');
+        const quantityInputs = document.querySelectorAll('.quantity-input');
+
+        productSelects.forEach((productSelect, index) => {
+            productSelect.addEventListener('change', function() {
+                checkQuantity(productSelect, quantityInputs[index]);
+            });
+        });
+
+        quantityInputs.forEach((quantityInput, index) => {
+            quantityInput.addEventListener('input', function() {
+                checkQuantity(productSelects[index], quantityInput);
+            });
+        });
+
+        function checkQuantity(productSelect, quantityInput) {
+            const selectedOption = productSelect.options[productSelect.selectedIndex];
+            const availableQuantity = parseInt(selectedOption.getAttribute('data-available-quantity'));
+            const inputQuantity = parseInt(quantityInput.value);
+            const errorMessage = productSelect.closest('.order-item').querySelector('.error-message');
+            const saveButton = document.getElementById('saveButton'); // Assuming the button's ID is 'saveButton'
+
+            if (inputQuantity > availableQuantity) {
+                errorMessage.style.display = 'inline';
+                quantityInput.classList.add('is-invalid');
+                saveButton.disabled = true;
+            } else {
+                errorMessage.style.display = 'none';
+                quantityInput.classList.remove('is-invalid');
+                saveButton.disabled = false;
+            }
+        }
+    });
     document.addEventListener('DOMContentLoaded', function() {
         const orderItems = document.getElementById('order-items');
         const addMoreItemsButton = document.getElementById('addMoreItems');

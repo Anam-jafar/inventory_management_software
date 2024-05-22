@@ -18,10 +18,14 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
+    public function payment(){
+        return $this->hasMany(Payment::class);
+    }
+
     protected $fillable = [
         'customer_id',
         'total_amount',
         'discount',
         'total_paid',
-    ];
+    ]; 
 }

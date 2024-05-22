@@ -75,6 +75,9 @@ Route::controller(SupplierController::class)->group(function (){
 Route::controller(OrderController::class)->group(function (){
     Route::match(['get', 'post'], '/add-order', 'addOrder')->name('addOrder');
     Route::get('/view-order/{id}', 'viewOrder')->name('viewOrder');
+    Route::get('/order-list', 'allOrder')->name('allOrder');
+    Route::post('/order/{id}/pay', 'payOrder')->name('payOrder');
+
 
 });
 
