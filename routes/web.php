@@ -77,6 +77,8 @@ Route::controller(OrderController::class)->group(function (){
     Route::get('/view-order/{id}', 'viewOrder')->name('viewOrder');
     Route::get('/order-list', 'allOrder')->name('allOrder');
     Route::post('/order/{id}/pay', 'payOrder')->name('payOrder');
+    Route::get('/print-layout', 'getPrintLayout')->name('getPrintLayout');
+
 
 
 });

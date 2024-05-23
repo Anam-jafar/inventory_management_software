@@ -17,42 +17,44 @@
                 <form class="forms-sample" method="POST" enctype="multipart/form-data" id="createOrderForm">
                     @csrf
                     <div id="order-items">
-                    <div class="form-group row order-item">
-    <label for="product" class="col-sm-3 col-form-label">Product</label>
-    <div class="col-sm-6">
-        <select class="form-control product-select" id="product" name="products[]">
-            <option value="">Choose product</option>
-            @foreach($products as $product)
-                <option value="{{ $product->id }}" data-price="{{ $product->price }}" data-available-quantity="{{ $product->quantity }}">{{ $product->name }}</option>
-            @endforeach
-        </select>
-    </div>
-    <label for="quantity" class="col-sm-1 col-form-label">Quantity</label>
-    <div class="col-sm-2">
-        <input type="number" class="form-control quantity-input" id="quantity" name="quantities[]" placeholder="Quantity">
-    </div>
-    <div class="col-sm-12">
-        <span class="text-danger error-message" style="display: none;">Quantity needs to be less than or equal to available quantity.</span>
-    </div>
-</div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-12">
-                            <button type="button" class="btn btn-secondary btn-sm" id="addMoreItems">Add More Items</button>
+                        <div class="form-group row order-item">
+                            <label for="product" class="col-sm-3 col-form-label">Product</label>
+                            <div class="col-sm-6">
+                                <select class="form-control product-select custom-select" id="product" name="products[]">
+                                    <option value="">Choose product</option>
+                                    @foreach($products as $product)
+                                        <option value="{{ $product->id }}" data-price="{{ $product->price }}" data-available-quantity="{{ $product->quantity }}">{{ $product->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <label for="quantity" class="col-sm-1 col-form-label">Quantity</label>
+                            <div class="col-sm-2">
+                                <input type="number" class="form-control quantity-input" id="quantity" name="quantities[]" placeholder="Quantity">
+                            </div>
+                            <div class="col-sm-12">
+                                <span class="text-danger error-message" style="display: none;">Quantity needs to be between 1 and available quantity.</span>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group row">
+                        <div class="col-sm-12 d-flex justify-end">
+                            <a class="btn btn-secondary btn-sm plus-button" id="addMoreItems"><i class="mdi mdi-plus"></i></a>
+                        </div>
+                    </div>
+                    <hr>
+                    <br>
+                    <div class="form-group row">
                         <label for="customer" class="col-sm-3 col-form-label">Choose Customer</label>
                         <div class="col-sm-6">
-                            <select class="form-control" id="customer" name="customer_id">
+                            <select class="form-control custom-select" id="customer" name="customer_id">
                                 <option value="">Choose customer</option>
                                 @foreach($customers as $customer)
                                     <option value="{{ $customer->id }}">{{ $customer->name }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-sm-3">
-                            <button type="button" class="btn btn-info" id="addNewCustomer">Add New Customer</button>
+                        <div class="col-sm-3 d-flex justify-start">
+                            <a id="addNewCustomer">New Customer</a>
                         </div>
                     </div>
                     <div id="newCustomerFields" style="display:none;">
@@ -78,17 +80,17 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Discount</label>
                         <div class="col-sm-2">
-                            <label class="switch">
-                                <input type="checkbox" id="discountSwitch">
-                                <span class="slider round"></span>
-                            </label>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="discountSwitch">
+                                <label class="form-check-label" for="discountSwitch"></label>
+                            </div>
                         </div>
                     </div>
                     <div id="discountFields" style="display:none;">
                         <div class="form-group row">
                             <label for="discountType" class="col-sm-3 col-form-label">Discount Type</label>
                             <div class="col-sm-3">
-                                <select class="form-control" id="discountType" name="discount_type">
+                                <select class="form-control custom-select" id="discountType" name="discount_type">
                                     <option value="percentage">Percentage</option>
                                     <option value="amount">Amount</option>
                                 </select>
@@ -107,8 +109,8 @@
                     </div>
                     <div class="row justify-content-end">
                         <div class="col-auto">
+                            <a href="#" class="btn btn-rounded btn-danger btn-lg" id="printOrder"><i class="mdi mdi-cancel"></i> Cancel</a>
                             <button type="submit" class="btn btn-rounded btn-success btn-lg " id="saveButton"><i class="mdi mdi-content-save"></i> Save</button>
-                            <button type="button" class="btn btn-rounded btn-primary btn-lg" id="printOrder"><i class="mdi mdi-printer"></i> Print</button>
                         </div>
                     </div>
                 </form>
@@ -118,40 +120,6 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const productSelects = document.querySelectorAll('.product-select');
-        const quantityInputs = document.querySelectorAll('.quantity-input');
-
-        productSelects.forEach((productSelect, index) => {
-            productSelect.addEventListener('change', function() {
-                checkQuantity(productSelect, quantityInputs[index]);
-            });
-        });
-
-        quantityInputs.forEach((quantityInput, index) => {
-            quantityInput.addEventListener('input', function() {
-                checkQuantity(productSelects[index], quantityInput);
-            });
-        });
-
-        function checkQuantity(productSelect, quantityInput) {
-            const selectedOption = productSelect.options[productSelect.selectedIndex];
-            const availableQuantity = parseInt(selectedOption.getAttribute('data-available-quantity'));
-            const inputQuantity = parseInt(quantityInput.value);
-            const errorMessage = productSelect.closest('.order-item').querySelector('.error-message');
-            const saveButton = document.getElementById('saveButton'); // Assuming the button's ID is 'saveButton'
-
-            if (inputQuantity > availableQuantity) {
-                errorMessage.style.display = 'inline';
-                quantityInput.classList.add('is-invalid');
-                saveButton.disabled = true;
-            } else {
-                errorMessage.style.display = 'none';
-                quantityInput.classList.remove('is-invalid');
-                saveButton.disabled = false;
-            }
-        }
-    });
     document.addEventListener('DOMContentLoaded', function() {
         const orderItems = document.getElementById('order-items');
         const addMoreItemsButton = document.getElementById('addMoreItems');
@@ -163,38 +131,7 @@
         const discountedTotalElement = document.getElementById('discountedTotal');
         const discountType = document.getElementById('discountType');
         const discountValue = document.getElementById('discountValue');
-
-        addMoreItemsButton.addEventListener('click', function() {
-            const orderItemTemplate = `
-                <div class="form-group row order-item">
-                    <label for="product" class="col-sm-3 col-form-label">Product</label>
-                    <div class="col-sm-6">
-                        <select class="form-control product-select" name="products[]">
-                            <option value="">Choose product</option>
-                            @foreach($products as $product)
-                                <option value="{{ $product->id }}" data-price="{{ $product->price }}">{{ $product->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <label for="quantity" class="col-sm-1 col-form-label">Quantity</label>
-                    <div class="col-sm-2">
-                        <input type="number" class="form-control quantity-input" name="quantities[]" placeholder="Quantity">
-                    </div>
-                </div>`;
-            orderItems.insertAdjacentHTML('beforeend', orderItemTemplate);
-        });
-
-        addNewCustomerButton.addEventListener('click', function() {
-            newCustomerFields.style.display = newCustomerFields.style.display === 'none' ? 'block' : 'none';
-        });
-
-        discountSwitch.addEventListener('change', function() {
-            discountFields.style.display = this.checked ? 'block' : 'none';
-        });
-
-        orderItems.addEventListener('input', updateTotalAmount);
-        discountType.addEventListener('change', updateTotalAmount);
-        discountValue.addEventListener('input', updateTotalAmount);
+        const saveButton = document.getElementById('saveButton');
 
         function updateTotalAmount() {
             let totalAmount = 0;
@@ -224,6 +161,82 @@
                 discountedTotalElement.textContent = `$${totalAmount.toFixed(2)}`;
             }
         }
+
+        function checkQuantity(productSelect, quantityInput) {
+            const selectedOption = productSelect.options[productSelect.selectedIndex];
+            const availableQuantity = parseInt(selectedOption.getAttribute('data-available-quantity'));
+            const inputQuantity = parseInt(quantityInput.value);
+            const errorMessage = productSelect.closest('.order-item').querySelector('.error-message');
+
+            if (inputQuantity <= 0 || inputQuantity > availableQuantity) {
+                errorMessage.style.display = 'inline';
+                quantityInput.classList.add('is-invalid');
+                saveButton.disabled = true;
+            } else {
+                errorMessage.style.display = 'none';
+                quantityInput.classList.remove('is-invalid');
+                saveButton.disabled = false;
+            }
+        }
+
+        function addEventListenersToNewItem(item) {
+            const productSelect = item.querySelector('.product-select');
+            const quantityInput = item.querySelector('.quantity-input');
+
+            productSelect.addEventListener('change', function() {
+                checkQuantity(productSelect, quantityInput);
+                updateTotalAmount();
+            });
+
+            quantityInput.addEventListener('input', function() {
+                checkQuantity(productSelect, quantityInput);
+                updateTotalAmount();
+            });
+        }
+
+        addMoreItemsButton.addEventListener('click', function() {
+            const orderItemTemplate = `
+                <div class="form-group row order-item">
+                    <label for="product" class="col-sm-3 col-form-label">Product</label>
+                    <div class="col-sm-6">
+                        <select class="form-control product-select custom-select" name="products[]">
+                            <option value="">Choose product</option>
+                            @foreach($products as $product)
+                                <option value="{{ $product->id }}" data-price="{{ $product->price }}" data-available-quantity="{{ $product->quantity }}">{{ $product->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <label for="quantity" class="col-sm-1 col-form-label">Quantity</label>
+                    <div class="col-sm-2">
+                        <input type="number" class="form-control quantity-input" name="quantities[]" placeholder="Quantity">
+                    </div>
+                    <div class="col-sm-12">
+                        <span class="text-danger error-message" style="display: none;">Quantity needs to be between 1 and available quantity.</span>
+                    </div>
+                </div>`;
+            orderItems.insertAdjacentHTML('beforeend', orderItemTemplate);
+
+            const newItem = orderItems.lastElementChild;
+            addEventListenersToNewItem(newItem);
+        });
+
+        addNewCustomerButton.addEventListener('click', function() {
+            newCustomerFields.style.display = newCustomerFields.style.display === 'none' ? 'block' : 'none';
+        });
+
+        discountSwitch.addEventListener('change', function() {
+            discountFields.style.display = this.checked ? 'block' : 'none';
+            updateTotalAmount();
+        });
+
+        orderItems.addEventListener('input', updateTotalAmount);
+        discountType.addEventListener('change', updateTotalAmount);
+        discountValue.addEventListener('input', updateTotalAmount);
+
+        // Initial setup for the first item
+        document.querySelectorAll('.order-item').forEach(addEventListenersToNewItem);
     });
 </script>
+
+
 @endsection

@@ -7,6 +7,9 @@
             <div class="card-body">
                 <h4 class="card-title">View Order</h4>
                 <p class="card-description"> Details of the order. </p>
+                <div id="printContent">
+
+
 
                 <div class="row">
                     <div class="col-sm-6">
@@ -92,13 +95,21 @@
                         </tfoot>
                     </table>
                 </div>
+                            </div>
+                
+                <div class="mt-4 d-flex justify-end">
                 @if($order->payment_status != config('payment_status.paid'))
-                <div class="row justify-content-end mt-4">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#paymentModal">
+                    <button  class="btn btn-success btn-lg m-1" data-bs-toggle="modal" data-bs-target="#paymentModal">
                         Pay
                     </button>
+                    @endif
+                    <button  class="btn btn-primary btn-lg m-1" onclick="printContent()">
+                        Print
+                    </button>
                 </div>
-                @endif
+                
+                
+
             </div>
         </div>
     </div>
@@ -138,6 +149,35 @@
             payButton.textContent = 'Pay - {{ $order->due }}';
         }
     });
+    function printContent() {
+    // Open a new window for printing
+    var printWindow = window.open('', '_blank');
+
+    // Fetch the content of the existing Blade template
+    fetch('/print-layout')
+        .then(response => response.text())
+        .then(template => {
+            // Write the template content into the print preview window
+            printWindow.document.write(template);
+
+            // Get the content to print from the current page
+            var content = document.getElementById('printContent').innerHTML;
+
+            // Inject the content into the print preview window
+            printWindow.document.write(content);
+
+            // Close the body and HTML tags
+            printWindow.document.write('</div></body></html>');
+
+            // Close the document
+            printWindow.document.close();
+
+            // Print the window
+            printWindow.print();
+        });
+}
+
+
 </script>
 
 @endsection

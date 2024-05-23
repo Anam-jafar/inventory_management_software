@@ -145,6 +145,9 @@ class OrderController extends Controller
     
         return redirect()->route('viewOrder', $order->id);
     }
-    
+    public function getPrintLayout()
+    {
+        return view('layouts.printLayout');
+    }
     
 }

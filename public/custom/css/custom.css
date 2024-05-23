@@ -1,13 +1,30 @@
 .pagination-select {
     width: 70px; 
     border: none;
-    border-bottom: 1px solid #ced4da;;
+    border-bottom: 1px solid #ced4da;
     border-radius: 2px; 
 }
 
 .status-select {
     width: 120px; 
     border: none;
-    border-bottom: 1px solid #ced4da;;
+    border-bottom: 1px solid #ced4da;
     border-radius: 2px; 
 }
+
+.custom-select{
+    height: 50px;
+    border-radius: 5px; 
+}
+.plus-button {
+    display: inline-block;
+    border-radius: 50%;
+    cursor: pointer;
+}
+#addNewCustomer {
+    text-decoration: underline;
+    vertical-align: bottom;
+    cursor: pointer;
+    display: inline-block; /* Ensures that vertical-align works correctly */
+}
+

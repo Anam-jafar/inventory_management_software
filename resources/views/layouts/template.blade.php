@@ -253,194 +253,111 @@
       </nav>
       <!-- partial -->
       <div class="container-fluid page-body-wrapper pt-4">
-        <!-- partial:partials/_sidebar.html -->
-        <nav class="sidebar sidebar-offcanvas" id="sidebar">
-          <ul class="nav">
+    <!-- partial:partials/_sidebar.html -->
+    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
             <li class="nav-item nav-category">Main</li>
             <li class="nav-item">
-              <a class="nav-link" href="index.html">
-                <span class="icon-bg"><i class="mdi mdi-cube menu-icon"></i></span>
-                <span class="menu-title">Dashboard</span>
-              </a>
+                <a class="nav-link" href="index.html">
+                    <span class="icon-bg"><i class="mdi mdi-cube menu-icon"></i></span>
+                    <span class="menu-title">Dashboard</span>
+                </a>
             </li>
             <!-- Category -->
             <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <span class="icon-bg"><i class="mdi menu-icon mdi-format-list-bulleted-type"></i></span>
-                <span class="menu-title">Category</span>
-                <i class="menu-arrow"></i>
-              </a>
-              <div class="collapse" id="ui-basic">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="{{route('allCategory')}}">Categories List</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="{{route('addCategory')}}">Add Category</a></li>
-                </ul>
-              </div>
+                <a class="nav-link" data-bs-toggle="collapse" href="#category-collapse" aria-expanded="false" aria-controls="category-collapse">
+                    <span class="icon-bg"><i class="mdi menu-icon mdi-format-list-bulleted-type"></i></span>
+                    <span class="menu-title">Category</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="category-collapse">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="{{route('allCategory')}}">Categories List</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{route('addCategory')}}">Add Category</a></li>
+                    </ul>
+                </div>
             </li>
             <!-- Category end -->
 
             <!-- Product -->
             <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <span class="icon-bg"><i class="mdi menu-icon mdi-format-list-bulleted-type"></i></span>
-                <span class="menu-title">Product</span>
-                <i class="menu-arrow"></i>
-              </a>
-              <div class="collapse" id="ui-basic">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="{{route('allProduct')}}">Product List</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="{{route('addProduct')}}">Add Product</a></li>
-                </ul>
-              </div>
+                <a class="nav-link" data-bs-toggle="collapse" href="#product-collapse" aria-expanded="false" aria-controls="product-collapse">
+                    <span class="icon-bg"><i class="mdi menu-icon mdi-format-list-bulleted-type"></i></span>
+                    <span class="menu-title">Product</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="product-collapse">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="{{route('allProduct')}}">Product List</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{route('addProduct')}}">Add Product</a></li>
+                    </ul>
+                </div>
             </li>
             <!-- Product end -->
 
             <!-- Employee -->
             <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-                <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
-                <span class="menu-title">Employee</span>
-                <i class="menu-arrow"></i>
-              </a>
-              <div class="collapse" id="auth">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="{{route('allEmployee')}}"> Employee List </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="{{route('addEmployee')}}"> Add Employee </a></li>
-                  <!-- <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li> -->
-                </ul>
-              </div>
+                <a class="nav-link" data-bs-toggle="collapse" href="#employee-collapse" aria-expanded="false" aria-controls="employee-collapse">
+                    <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
+                    <span class="menu-title">Employee</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="employee-collapse">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="{{route('allEmployee')}}"> Employee List </a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{route('addEmployee')}}"> Add Employee </a></li>
+                    </ul>
+                </div>
             </li>
-            <!-- Employee end-->
+            <!-- Employee end -->
 
             <!-- Customer -->
             <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-                <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
-                <span class="menu-title">Customer</span>
-                <i class="menu-arrow"></i>
-              </a>
-              <div class="collapse" id="auth">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="{{route('allCustomer')}}"> Customer List </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="{{route('addCustomer')}}"> Add Customer </a></li>
-                </ul>
-              </div>
+                <a class="nav-link" data-bs-toggle="collapse" href="#customer-collapse" aria-expanded="false" aria-controls="customer-collapse">
+                    <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
+                    <span class="menu-title">Customer</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="customer-collapse">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="{{route('allCustomer')}}"> Customer List </a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{route('addCustomer')}}"> Add Customer </a></li>
+                    </ul>
+                </div>
             </li>
-            <!-- Customer end-->
+            <!-- Customer end -->
 
             <!-- Supplier -->
             <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-                <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
-                <span class="menu-title">Supplier</span>
-                <i class="menu-arrow"></i>
-              </a>
-              <div class="collapse" id="auth">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="{{route('allSupplier')}}"> Supplier List </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="{{route('addSupplier')}}"> Add Supplier </a></li>
-                </ul>
-              </div>
+                <a class="nav-link" data-bs-toggle="collapse" href="#supplier-collapse" aria-expanded="false" aria-controls="supplier-collapse">
+                    <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
+                    <span class="menu-title">Supplier</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="supplier-collapse">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="{{route('allSupplier')}}"> Supplier List </a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{route('addSupplier')}}"> Add Supplier </a></li>
+                    </ul>
+                </div>
             </li>
-            <!-- Supplier end-->
+            <!-- Supplier end -->
 
             <!-- Order -->
             <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-                <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
-                <span class="menu-title">Order</span>
-                <i class="menu-arrow"></i>
-              </a>
-              <div class="collapse" id="auth">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="{{route('allOrder')}}"> Order List </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="{{route('addOrder')}}"> Create Order </a></li>
-                </ul>
-              </div>
-            </li>
-            <!-- Order end-->
-
-            <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <span class="icon-bg"><i class="mdi mdi-crosshairs-gps menu-icon"></i></span>
-                <span class="menu-title">UI Elements</span>
-                <i class="menu-arrow"></i>
-              </a>
-              <div class="collapse" id="ui-basic">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
-                </ul>
-              </div>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="pages/icons/mdi.html">
-                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
-                <span class="menu-title">Icons</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="pages/forms/basic_elements.html">
-                <span class="icon-bg"><i class="mdi mdi-format-list-bulleted menu-icon"></i></span>
-                <span class="menu-title">Forms</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="pages/charts/chartjs.html">
-                <span class="icon-bg"><i class="mdi mdi-chart-bar menu-icon"></i></span>
-                <span class="menu-title">Charts</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="pages/tables/basic-table.html">
-                <span class="icon-bg"><i class="mdi mdi-table-large menu-icon"></i></span>
-                <span class="menu-title">Tables</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-                <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
-                <span class="menu-title">User Pages</span>
-                <i class="menu-arrow"></i>
-              </a>
-              <div class="collapse" id="auth">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/blank-page.html"> Blank Page </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
-                </ul>
-              </div>
-            </li>
-            <li class="nav-item documentation-link">
-              <a class="nav-link" href="http://www.bootstrapdash.com/demo/connect-plus-free/jquery/documentation/documentation.html" target="_blank">
-                <span class="icon-bg">
-                  <i class="mdi mdi-file-document-box menu-icon"></i>
-                </span>
-                <span class="menu-title">Documentation</span>
-              </a>
-            </li>
-            <li class="nav-item sidebar-user-actions">
-              <div class="user-details">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <div class="d-flex align-items-center">
-                      <div class="sidebar-profile-img">
-                        <img src="{{asset('materials/assets/images/faces/face28.png')}}" alt="image">
-                      </div>
-                      <div class="sidebar-profile-text">
-                        <p class="mb-1">Henry Klein</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="badge badge-danger">3</div>
+                <a class="nav-link" data-bs-toggle="collapse" href="#order-collapse" aria-expanded="false" aria-controls="order-collapse">
+                    <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
+                    <span class="menu-title">Order</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="order-collapse">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="{{route('allOrder')}}"> Order List </a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{route('addOrder')}}"> Create Order </a></li>
+                    </ul>
                 </div>
-              </div>
             </li>
+            <!-- Order end -->
             <li class="nav-item sidebar-user-actions">
               <div class="sidebar-user-menu">
                 <a href="#" class="nav-link"><i class="mdi mdi-settings menu-icon"></i>
@@ -460,6 +377,7 @@
                   <span class="menu-title">Log Out</span></a>
               </div>
             </li>
+
           </ul>
         </nav>
         <!-- partial -->
