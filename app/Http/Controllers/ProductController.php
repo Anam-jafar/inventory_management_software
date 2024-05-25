@@ -112,4 +112,24 @@ class ProductController extends Controller
         }
     }
 
+    public function restockProduct(Request $request){
+        $products = Product::where('deleted', '!=', config('deleted'))->latest()->get();
+        
+        if($request->isMethod('post')){
+            $request->validate([
+                'quantity' =>'required|numeric|min:1',
+            ]);
+
+            $product = Product::find($request->id);
+            $product->quantity += $request->quantity;
+            $product->save();
+
+            notify()->success('Product restocked successfully', 'Success') ;
+            return redirect()->back();
+
+        }else{
+            return view('product.restockProduct', compact('products'));
+        }
+    }
+
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use App\Models\Order;
 
 class CustomerController extends Controller
 {
@@ -22,10 +23,21 @@ class CustomerController extends Controller
         return view('customer.allCustomer', compact('customers', 'query', 'perPage'));
     }
 
-    public function viewCustomer($id = null){
-        $customer = Customer::find($id);
+    public function viewCustomer($id = null, Request $request){
+        $customer = Customer::with('orders')->find($id);
 
-        return view('customer.viewCustomer', compact('customer'));
+        $perPage = $request->input('perPage', 5);
+        $paymentStatus = $request->input('payment_status', 'all');
+    
+        $orders = Order::with('customer')->where('customer_id', $id)
+            ->when($paymentStatus !== 'all', function($queryBuilder) use ($paymentStatus) {
+                $queryBuilder->where('payment_status', $paymentStatus);
+            })
+            ->latest()
+            ->paginate($perPage);
+
+
+        return view('customer.viewCustomer', compact(['customer', 'orders']));
     }
     
     

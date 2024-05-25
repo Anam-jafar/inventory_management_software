@@ -46,6 +46,7 @@ Route::controller(ProductController::class)->group(function (){
     Route::match(['get', 'post'],'/add-product', 'addProduct')->name('addProduct');
     Route::match(['get', 'post'], '/edit-product/{id}', 'editProduct')->name('editProduct');
     Route::get('/delete-product/{id}', 'deleteProduct')->name('deleteProduct');
+    Route::match(['get', 'post'], '/restock-product', 'restockProduct')->name('restockProduct');
 });
 
 Route::controller(EmployeeController::class)->group(function (){
