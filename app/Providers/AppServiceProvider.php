@@ -27,6 +27,16 @@ class AppServiceProvider extends ServiceProvider
             '1' => 'partially paid',
             '2' => 'paid'
         ]]);
+
+        config(['expense_type' => [
+            'raw_material' => 1,
+            'factory_rent' => 2,
+            'food' => 3,
+            'electricity' => 4,
+            'repair_machine' => 5 ,
+            'new_machine' => 6,
+            'others' => 0,
+        ]]);
     }
 
     /**

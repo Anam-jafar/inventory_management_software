@@ -206,6 +206,22 @@
             </li>
             <!-- Supplier end -->
 
+            <!-- Expense -->
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#expense-collapse" aria-expanded="false" aria-controls="expense-collapse">
+                    <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
+                    <span class="menu-title">Expense</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="expense-collapse">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="{{route('allExpense')}}"> Expense List </a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{route('addExpense')}}"> Add Expense </a></li>
+                    </ul>
+                </div>
+            </li>
+            <!-- Expense end -->
+
             <!-- Order -->
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#order-collapse" aria-expanded="false" aria-controls="order-collapse">

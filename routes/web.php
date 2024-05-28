@@ -5,6 +5,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
@@ -79,9 +80,14 @@ Route::controller(OrderController::class)->group(function (){
     Route::get('/order-list', 'allOrder')->name('allOrder');
     Route::post('/order/{id}/pay', 'payOrder')->name('payOrder');
     Route::get('/print-layout', 'getPrintLayout')->name('getPrintLayout');
+});
 
-
-
+Route::controller(ExpenseController::class)->group(function (){
+    Route::match(['get', 'post'], '/add-expense', 'addExpense')->name('addExpense');
+    Route::match(['get', 'post'], '/edit-expense/{id}', 'editExpense')->name('editExpense');
+    Route::get('/view-expense/{id}', 'viewExpense')->name('viewExpense');
+    Route::get('/delete-expense/{id}', 'deleteExpense')->name('deleteExpense');
+    Route::get('/expense-list', 'allExpense')->name('allExpense');
 });
 
 require __DIR__.'/auth.php';
