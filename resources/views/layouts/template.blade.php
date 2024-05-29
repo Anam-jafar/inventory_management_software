@@ -169,6 +169,7 @@
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item"> <a class="nav-link" href="{{route('allEmployee')}}"> Employee List </a></li>
                         <li class="nav-item"> <a class="nav-link" href="{{route('addEmployee')}}"> Add Employee </a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{route('paySalary')}}"> Pay Salary </a></li>
                     </ul>
                 </div>
             </li>

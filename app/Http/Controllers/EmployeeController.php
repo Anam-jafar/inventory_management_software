@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Employee;
+use App\Models\Salary;
+use App\Models\SalaryHistory;
 
 class EmployeeController extends Controller
 {
@@ -115,4 +117,55 @@ class EmployeeController extends Controller
             return redirect()->back();
         }
     }
+
+    public function paySalary(  Request $request){
+        $employees = Employee::where('deleted', '!=', config('deleted'))->latest()->get();
+    
+        if($request->isMethod('post')){
+            $request->validate([
+                'amount' => 'required|numeric|min:1',
+                'year' => 'required',
+                'month' =>'required',
+                'employee_id' =>'required',
+            ]);
+    
+            $salary = Salary::where('employee_id', $request->employee_id)
+                                ->where('month', $request->month)
+                                ->where('year', $request->year)
+                                ->first();
+    
+            if($salary){
+                if($salary->status == config('salary.partially_paid')){
+                    $salary->paid_amount += $request->amount;
+                }else{
+                    notify()->warning('Entered Months salay is fully paid', 'Can not proceed to pay');
+                    return redirect()->back();
+                }
+                
+
+            }else{
+                $salary = new Salary();
+                $salary->fill($request->all());
+                $salary->paid_amount = $request->amount;
+            }
+            if($salary->paid_amount == Employee::find($salary->employee_id)->value('salary')){
+                $salary->status = 1;
+            }else{
+                $salary->status = 2;
+            }
+            $salary->save();
+
+            $salary_history = new SalaryHistory();
+            $salary_history->salary_id = $salary->id;
+            $salary_history->amount = $request->amount;
+            $salary_history->save();
+
+            notify()->success('Salary paid successfully', 'Paid') ;
+    
+            return redirect()->back();
+        }else{
+            return view('employee.paySalary', compact('employees'));
+        }
+    }
+    
 }

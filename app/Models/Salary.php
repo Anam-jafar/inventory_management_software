@@ -13,9 +13,12 @@ class Salary extends Model
     public function salaryHistory(){
         return $this->hasMany(SalaryHistory::class);
     }
+    public function employee(){
+        return $this->belongsTo(Employee::class);
+    }
 
     protected $fillable= [
-        'customer_id',
+        'employee_id',
         'paid_amount',
         'month',
         'year'

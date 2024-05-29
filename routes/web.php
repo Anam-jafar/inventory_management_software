@@ -56,6 +56,7 @@ Route::controller(EmployeeController::class)->group(function (){
     Route::match(['get', 'post'], '/edit-employee/{id}', 'editEmployee')->name('editEmployee');
     Route::get('/delete-employee/{id}', 'deleteEmployee')->name('deleteEmployee');
     Route::get('/view-employee/{id}', 'viewEmployee')->name('viewEmployee');
+    Route::match(['get', 'post'], '/pay-salary', 'paySalary')->name('paySalary');
 });
 
 Route::controller(CustomerController::class)->group(function (){

@@ -15,12 +15,14 @@ return new class extends Migration
     {
         Schema::create('salaries', function (Blueprint $table) {
             $table->id();
-            $table->integer('customer_id');
+            $table->integer('employee_id');
             $table->integer('paid_amount');
             $table->integer('month');
             $table->integer('year');
             $table->tinyInteger('status');
             $table->timestamps();
+
+            $table->foreign('employee_id')->references('id')->on('employees');
         });
     }
 

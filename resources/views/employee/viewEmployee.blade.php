@@ -35,4 +35,39 @@
         </div>
     </div>
 </div>
+
+<!-- Salary History -->
+<div class="row justify-content-center mt-4">
+    <div class="col-md-10">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Salary History</h4>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Month</th>
+                                <th>Year</th>
+                                <th>Paid Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($employee->salaries as $salary)
+                                <tr>
+                                    <td>{{ $salary->id }}</td>
+                                    <td>{{ $salary->month }}</td>
+                                    <td>{{ $salary->year }}</td>
+                                    <td>{{ $salary->paid_amount }}</td>
+                                    <td>{{ $salary->status }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

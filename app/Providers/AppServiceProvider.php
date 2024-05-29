@@ -37,6 +37,11 @@ class AppServiceProvider extends ServiceProvider
             'new_machine' => 6,
             'others' => 0,
         ]]);
+
+        config(['salary' => [
+            'paid' => 1,
+            'partially_paid' =>2
+        ]]);
     }
 
     /**
