@@ -42,6 +42,10 @@ class AppServiceProvider extends ServiceProvider
             'paid' => 1,
             'partially_paid' =>2
         ]]);
+
+        config(['extra_income_type' => [
+            'ss_waste' => 1,
+        ]]);
     }
 
     /**

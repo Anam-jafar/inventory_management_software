@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\ExtraIncome;
 use App\Models\Product;
 
 class ProductController extends Controller
@@ -130,6 +131,71 @@ class ProductController extends Controller
         }else{
             return view('product.restockProduct', compact('products'));
         }
+    }
+
+    public function addExtraIncome(Request $request){
+        $incomeTypes = config('extra_income_type');
+        if($request->isMethod('post')){
+            $request->validate([
+                'amount' => 'required|numeric|min:1'
+            ]);
+
+            $income = new ExtraIncome();
+            $income->type = $request->type;
+            $income->amount = $request->amount;
+            if(isset($request->description)){
+                $income->description = $request->description;
+            }
+
+            if($income->save()){
+                notify()->success('Extra Income info saved', 'Success') ;
+                return redirect()->route('allExtraIncome');
+            }
+        }else{
+            return view('product.addExtraIncome', compact('incomeTypes'));
+        }
+    }
+
+    public function editExtraIncome(Request $request, $id = null){
+        $incomeTypes = config('extra_income_type');
+        $income = ExtraIncome::find($id);
+        if($request->isMethod('post')){
+            $request->validate([
+                'amount' => 'required|numeric|min:1'
+            ]);
+
+            $income->type = $request->type;
+            $income->amount = $request->amount;
+            if(isset($request->description)){
+                $income->description = $request->description;
+            }
+
+            if($income->save()){
+                notify()->success('Extra Income info saved', 'Success') ;
+                return redirect()->route('allExtraIncome');
+            }
+        }else{
+            return view('product.addExtraIncome', compact(['incomeTypes', 'income']));
+        }
+    }
+
+    public function allExtraIncome(Request $request) {
+        $perPage = $request->input('perPage', 10);
+        $type = $request->input('type', 'all');
+        
+        $incomes = ExtraIncome::when($type !== 'all', function ($query) use ($type) {
+            $query->where('type', $type);
+        })->latest()->paginate($perPage);
+    
+        $incomeTypes = config('extra_income_type');
+    
+        return view('product.allExtraIncome', compact('incomes', 'incomeTypes', 'type'));
+    }
+
+    public function deleteExtraIncome($id = null){
+        ExtraIncome::find($id)->delete();
+        notify()->warning('Extra income info deleted.', 'Deleted') ;
+        return redirect()->back();
     }
 
 }

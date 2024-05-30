@@ -153,6 +153,8 @@
                         <li class="nav-item"> <a class="nav-link" href="{{route('allProduct')}}">Product List</a></li>
                         <li class="nav-item"> <a class="nav-link" href="{{route('addProduct')}}">Add Product</a></li>
                         <li class="nav-item"> <a class="nav-link" href="{{route('restockProduct')}}">Restock Product</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{route('addExtraIncome')}}">Add Extra Income</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{route('allExtraIncome')}}">Extra Income List</a></li>
                     </ul>
                 </div>
             </li>

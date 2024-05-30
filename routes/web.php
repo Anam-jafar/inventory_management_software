@@ -48,6 +48,10 @@ Route::controller(ProductController::class)->group(function (){
     Route::match(['get', 'post'], '/edit-product/{id}', 'editProduct')->name('editProduct');
     Route::get('/delete-product/{id}', 'deleteProduct')->name('deleteProduct');
     Route::match(['get', 'post'], '/restock-product', 'restockProduct')->name('restockProduct');
+    Route::match(['get', 'post'], '/add-extra-income', 'addExtraIncome')->name('addExtraIncome');
+    Route::match(['get', 'post'], '/edit-extra-income/{id}', 'editExtraIncome')->name('editExtraIncome');
+    Route::get('/extra-income-list', 'allExtraIncome')->name('allExtraIncome');
+    Route::get('/delete-extra-income', 'deleteExtraIncome')->name('deleteExtraIncome');
 });
 
 Route::controller(EmployeeController::class)->group(function (){
