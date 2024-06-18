@@ -28,3 +28,6 @@
     display: inline-block; /* Ensures that vertical-align works correctly */
 }
 
+.num-display {
+    font-size: 24pt;
+}

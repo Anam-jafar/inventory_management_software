@@ -5,6 +5,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\OrderController;
@@ -21,9 +22,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard.dashboard');
-});
+Route::get('/', [DashboardController::class,  'dashboardView'])->name('dashboardView');
+Route::get('/view-data', [DashboardController::class,  'dashboardViewData'])->name('dashboardViewData');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
