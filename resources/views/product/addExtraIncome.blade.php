@@ -18,7 +18,7 @@
                     <div class="form-group row">
                         <label for="type" class="col-sm-3 col-form-label">Income Type</label>
                         <div class="col-sm-9">
-                            <select class="form-control" id="type" name="type">
+                            <select class="form-control custom-select" id="type" name="type">
                                 @foreach($incomeTypes as $type => $value)
                                     <option value="{{ $value }}" {{ isset($income) && $income->type == $value ? 'selected' : '' }}>
                                         {{ ucfirst(str_replace('_', ' ', $type)) }}

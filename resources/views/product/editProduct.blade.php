@@ -25,7 +25,7 @@
             <div class="form-group row">
                 <label for="category" class="col-sm-3 col-form-label">Category</label>
                 <div class="col-sm-9">
-                    <select class="form-control" id="category" name="category_id">
+                    <select class="form-control custom-select" id="category" name="category_id">
                         <option value="">Choose category</option>
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}" {{ $category->id == $product->category_id ? 'selected' : '' }}>{{ $category->name }}</option>
@@ -57,7 +57,7 @@
                 </div>
                 <label for="status" class="col-sm-3 col-form-label">Status</label>
                 <div class="col-sm-3">
-                    <select class="form-control" id="status" name="status">
+                    <select class="form-control custom-select" id="status" name="status">
                         <option value="{{config('status.active')}}" {{ $product->status == config('status.active') ? 'selected' : '' }}>Active</option>
                         <option value="{{config('status.inactive')}}" {{ $product->status == config('status.inactive') ? 'selected' : '' }}>Inactive</option>
                     </select>

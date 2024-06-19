@@ -19,7 +19,7 @@
                     <div class="form-group row">
                         <label for="employee_id" class="col-sm-3 col-form-label">Select Employee</label>
                         <div class="col-sm-9">
-                            <select class="form-control" id="employee_id" name="employee_id">
+                            <select class="form-control custom-select" id="employee_id" name="employee_id">
                                 <option value="">Select Employee</option>
                                 @foreach($employees as $employee)
                                     <option value="{{ $employee->id }}">{{ $employee->id }} - {{ $employee->name }}</option>
@@ -36,7 +36,7 @@
                     <div class="form-group row">
                         <label for="month" class="col-sm-3 col-form-label">Month</label>
                         <div class="col-sm-9">
-                            <select class="form-control" id="month" name="month">
+                            <select class="form-control custom-select" id="month" name="month">
                                 <option value="">Select Month</option>
                                 @foreach (range(1, 12) as $monthNum)
                                     <option value="{{ $monthNum }}">{{ date('F', mktime(0, 0, 0, $monthNum, 1)) }}</option>
@@ -47,7 +47,7 @@
                     <div class="form-group row">
                         <label for="year" class="col-sm-3 col-form-label">Year</label>
                         <div class="col-sm-9">
-                            <select class="form-control" id="year" name="year">
+                            <select class="form-control custom-select" id="year" name="year">
                                 <option value="">Select Year</option>
                                 @php
                                     $currentYear = date('Y');

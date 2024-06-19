@@ -52,7 +52,7 @@
             <li class="nav-item nav-category"></li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('dashboardView') }}">
-                    <span class="icon-bg"><i class="mdi mdi-cube menu-icon"></i></span>
+                    <span class="icon-bg"><i class="mdi mdi-view-dashboard menu-icon"></i></span>
                     <span class="menu-title">Dashboard</span>
                 </a>
             </li>
@@ -75,7 +75,7 @@
             <!-- Product -->
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#product-collapse" aria-expanded="false" aria-controls="product-collapse">
-                    <span class="icon-bg"><i class="mdi menu-icon mdi-format-list-bulleted-type"></i></span>
+                    <span class="icon-bg"><i class="mdi menu-icon mdi-cube"></i></span>
                     <span class="menu-title">Product</span>
                     <i class="menu-arrow"></i>
                 </a>
@@ -94,7 +94,7 @@
             <!-- Employee -->
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#employee-collapse" aria-expanded="false" aria-controls="employee-collapse">
-                    <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
+                    <span class="icon-bg"><i class="mdi mdi-account-multiple menu-icon"></i></span>
                     <span class="menu-title">Employee</span>
                     <i class="menu-arrow"></i>
                 </a>
@@ -111,7 +111,7 @@
             <!-- Customer -->
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#customer-collapse" aria-expanded="false" aria-controls="customer-collapse">
-                    <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
+                    <span class="icon-bg"><i class="mdi mdi-target-account menu-icon"></i></span>
                     <span class="menu-title">Customer</span>
                     <i class="menu-arrow"></i>
                 </a>
@@ -125,7 +125,7 @@
             <!-- Customer end -->
 
             <!-- Supplier -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#supplier-collapse" aria-expanded="false" aria-controls="supplier-collapse">
                     <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
                     <span class="menu-title">Supplier</span>
@@ -137,13 +137,13 @@
                         <li class="nav-item"> <a class="nav-link" href="{{route('addSupplier')}}"> Add Supplier </a></li>
                     </ul>
                 </div>
-            </li>
+            </li> -->
             <!-- Supplier end -->
 
             <!-- Expense -->
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#expense-collapse" aria-expanded="false" aria-controls="expense-collapse">
-                    <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
+                    <span class="icon-bg"><i class="mdi mdi-cash menu-icon"></i></span>
                     <span class="menu-title">Expense</span>
                     <i class="menu-arrow"></i>
                 </a>
@@ -159,7 +159,7 @@
             <!-- Order -->
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#order-collapse" aria-expanded="false" aria-controls="order-collapse">
-                    <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
+                    <span class="icon-bg"><i class="mdi mdi-format-list-bulleted-type menu-icon"></i></span>
                     <span class="menu-title">Order</span>
                     <i class="menu-arrow"></i>
                 </a>
