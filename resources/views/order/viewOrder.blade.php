@@ -6,18 +6,17 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">View Order</h4>
-                <p class="card-description"> Details of the order. </p>
                 <div id="printContent">
 
 
 
-                <div class="row">
-                    <div class="col-sm-6">
+                <div class="row d-flex">
+                    <div class="col-sm-6 text-dark">
                         <h5>Order Information</h5>
                         <p><strong>Order ID:</strong> {{ $order->id }}</p>
                         <p><strong>Order Date:</strong> {{ $order->created_at->format('d F Y H:i') }}</p>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 text-dark text-end">
                         <h5>Customer Information</h5>
                         <p><strong>Name:</strong> {{ $order->customer->name }}</p>
                         <p><strong>Contact:</strong> {{ $order->customer->contact }}</p>

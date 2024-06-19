@@ -130,5 +130,60 @@ class DashboardController extends Controller
             'customers' => $customers
         ]);
     }
+
+    public function generateMonthlyReport(Request $request) {
+        $month = $request->get('month');
+        $year = $request->get('year');
+        $startDate = Carbon::createFromDate($year, $month)->startOfMonth();
+        $endDate = Carbon::createFromDate($year, $month)->endOfMonth();
+    
+        // Fetch and process product data
+        $productsQuery = DB::table('order_items')
+            ->join('products', 'order_items.product_id', '=', 'products.id')
+            ->select('products.name as product_name', DB::raw('SUM(order_items.quantity) as total_quantity'))
+            ->groupBy('products.id')
+            ->whereBetween('order_items.updated_at', [$startDate, $endDate]);
+    
+        // Fetch and process expense data
+        $expensesQuery = DB::table('expenses')
+            ->select('type', DB::raw('SUM(amount) as total_amount'))
+            ->groupBy('type')
+            ->whereBetween('expenses.updated_at', [$startDate, $endDate]);
+    
+        $products = $productsQuery->get();
+        $expenses = $expensesQuery->get();
+    
+        $orders = Order::whereBetween('updated_at', [$startDate, $endDate])->sum('total_amount');
+        $paid = Order::whereBetween('updated_at', [$startDate, $endDate])->sum('total_paid');
+        $due = Order::whereBetween('updated_at', [$startDate, $endDate])->sum('due');
+        $salaries = Salary::whereBetween('updated_at', [$startDate, $endDate])->sum('paid_amount');
+        $expenseAmount = Expense::whereBetween('updated_at', [$startDate, $endDate])->sum('amount');
+        $expenseAmount += $salaries;
+        $extraIncome = ExtraIncome::whereBetween('updated_at', [$startDate, $endDate])->sum('amount');
+        $extraIncomes = ExtraIncome::whereBetween('updated_at', [$startDate, $endDate])->get();
+    
+        // Mapping expense types to their names
+        $expenseTypes = config('expense_type');
+        $mappedExpenses = $expenses->map(function($expense) use ($expenseTypes) {
+            $typeName = array_search($expense->type, $expenseTypes);
+            return [
+                'type' => $typeName,
+                'total_amount' => $expense->total_amount
+            ];
+        });
+    
+        return response()->json([
+            'products' => $products,
+            'expenses' => $mappedExpenses,
+            'totalExpense' => $expenseAmount,
+            'extraIncome' => $extraIncome,
+            'orders' => $orders,
+            'paid' => $paid,
+            'due' => $due,
+            'extraIncomes' => $extraIncomes,
+            'salaries' => $salaries
+        ]);
+    }
+    
     
 }

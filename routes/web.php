@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [DashboardController::class,  'dashboardView'])->name('dashboardView');
 Route::get('/view-data', [DashboardController::class,  'dashboardViewData'])->name('dashboardViewData');
+Route::get('/generateMonthlyReport', [DashboardController::class, 'generateMonthlyReport'])->name('generateMonthlyReport');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -23,7 +23,7 @@
                     <a class="nav-link" id="performance-tab" data-bs-toggle="tab" href="#performance-1" role="tab" aria-selected="false">Customer</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="conversion-tab" data-bs-toggle="tab" href="#conversion-1" role="tab" aria-selected="false">Conversion</a>
+                    <a class="nav-link" id="conversion-tab" data-bs-toggle="tab" href="#conversion-1" role="tab" aria-selected="false">Monthly Report</a>
                 </li>
             </ul>
             <div class="d-md-block d-none">
@@ -143,37 +143,73 @@
             </div>
             <div class="tab-pane fade" id="performance-1" role="tabpanel" aria-labelledby="performance-tab">
             <div class="row">
-    <!-- existing content here -->
-    <div class="col-lg-12 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Customers</h4>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Customer</th>
-                            <th>Order Count</th>
-                            <th>Total Due</th>
-                        </tr>
-                    </thead>
-                    <tbody id="customerTableBody">
-                        @foreach($customers as $customer)
-                        <tr>
-                            <td>{{ $customer->customer_name }}</td>
-                            <td>{{ $customer->order_count }}</td>
-                            <td>{{ $customer->total_due }}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                <div class="col-lg-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Customers</h4>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Customer</th>
+                                        <th>Order Count</th>
+                                        <th>Total Due</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="customerTableBody">
+                                    @foreach($customers as $customer)
+                                    <tr>
+                                        <td>{{ $customer->customer_name }}</td>
+                                        <td>{{ $customer->order_count }}</td>
+                                        <td>{{ $customer->total_due }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
+            </div>
+
+            <div class="tab-pane fade" id="conversion-1" role="tabpanel" aria-labelledby="conversion-tab">
+    <div class="card">
+        <div class="card-body">
+            <form id="reportForm" class="row">
+                <div class="form-group col-md-4">
+                    <select id="monthSelect" class="form-control custom-select">
+                        <option value="" disabled selected>Month</option>
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <select id="yearSelect" class="form-control custom-select">
+                        <option value="" disabled selected>Year</option>
+                        <!-- Year options here -->
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <button type="button" class="btn btn-rounded btn-success btn-lg" id="generateReportBtn" style="background-color: green !important;">Generate Monthly Report</button>
+                </div>
+            </form>
         </div>
     </div>
+    <div class="row mt-4" id="reportResults">
+        <!-- Report results will be displayed here -->
+    </div>
 </div>
-            </div>
-            <div class="tab-pane fade" id="conversion-1" role="tabpanel" aria-labelledby="conversion-tab">
-                <h3 class="text-center">Conversion</h3>
-            </div>
+
+
         </div>
     </div>
 </div>
@@ -224,5 +260,175 @@
     $(document).ready(function() {
         loadDashboardData('1_month');
     });
+    document.addEventListener('DOMContentLoaded', function() {
+    // Populate the year select options
+    const yearSelect = document.getElementById('yearSelect');
+    const currentYear = new Date().getFullYear();
+    for (let i = currentYear; i >= currentYear - 5; i--) {
+        const option = document.createElement('option');
+        option.value = i;
+        option.textContent = i;
+        yearSelect.appendChild(option);
+    }
+
+    document.getElementById('generateReportBtn').addEventListener('click', function() {
+        const month = document.getElementById('monthSelect').value;
+        const year = document.getElementById('yearSelect').value;
+        
+        fetch(`/generateMonthlyReport?month=${month}&year=${year}`)
+            .then(response => response.json())
+            .then(data => {
+                displayReport(data);
+            })
+            .catch(error => console.error('Error:', error));
+    });
+
+    function displayReport(data) {
+        const reportResults = document.getElementById('reportResults');
+        reportResults.innerHTML = '';
+
+        // Ensure data is an array
+        const products = Array.isArray(data.products) ? data.products : [];
+        const expenses = Array.isArray(data.expenses) ? data.expenses : [];
+        const extraIncome = Array.isArray(data.extraIncomes) ? data.extraIncomes : [];
+
+        // Create and append product sales table
+        const productSalesCard = createTableCard('Products Sale', 'productTableBody', [
+            { title: 'Products', field: 'product_name' },
+            { title: 'Unit Sold', field: 'total_quantity' }
+        ], products);
+        
+        // Add salaries to expenses array
+        expenses.push({ type: 'Salary', total_amount: data.salaries });
+
+        // Create and append expenses table
+        const expensesCard = createTableCard('Expenses', 'expenseTableBody', [
+            { title: 'Expense Type', field: 'type' },
+            { title: 'Amount', field: 'total_amount' }
+        ], expenses);
+
+        // Create and append extra income table
+        const extraIncomeCard = createTableCard('Extra Incomes', 'extraIncomeTableBody', [
+            { title: 'Income Type', field: 'type' },
+            { title: 'Amount', field: 'amount' }
+        ], extraIncome);
+
+        // Calculate totals and profitability
+        console.log(data.paid);
+        const totalRevenue = data.paid + extraIncome.reduce((sum, income) => sum + income.amount, "");
+        const paid = data.paid;
+        const extra = extraIncome.reduce((sum, income) => sum + income.amount,"");
+        const totalExpense = data.totalExpense;
+        const isProfitable = totalRevenue > totalExpense;
+        const salaries = data.salaries;
+        const invoiced = data.orders;
+
+        // Create and append summary card
+        const summaryCard = createSummaryCard('Summary', totalRevenue, totalExpense, isProfitable, paid, extra, salaries, invoiced);
+
+        // Append cards to the results container
+        reportResults.appendChild(productSalesCard);
+        reportResults.appendChild(expensesCard);
+        reportResults.appendChild(extraIncomeCard);
+        reportResults.appendChild(summaryCard);
+    }
+
+    function createTableCard(title, tbodyId, columns, data) {
+        const card = document.createElement('div');
+        card.classList.add('col-lg-6', 'grid-margin', 'stretch-card');
+
+        const cardInner = document.createElement('div');
+        cardInner.classList.add('card');
+
+        const cardBody = document.createElement('div');
+        cardBody.classList.add('card-body');
+
+        const cardTitle = document.createElement('h4');
+        cardTitle.classList.add('card-title');
+        cardTitle.textContent = title;
+
+        const table = document.createElement('table');
+        table.classList.add('table');
+
+        const thead = document.createElement('thead');
+        const trHead = document.createElement('tr');
+
+        columns.forEach(column => {
+            const th = document.createElement('th');
+            th.textContent = column.title;
+            trHead.appendChild(th);
+        });
+
+        thead.appendChild(trHead);
+
+        const tbody = document.createElement('tbody');
+        tbody.id = tbodyId;
+
+        data.forEach(item => {
+            const tr = document.createElement('tr');
+            columns.forEach(column => {
+                const td = document.createElement('td');
+                td.textContent = item[column.field];
+                tr.appendChild(td);
+            });
+            tbody.appendChild(tr);
+        });
+
+        table.appendChild(thead);
+        table.appendChild(tbody);
+
+        cardBody.appendChild(cardTitle);
+        cardBody.appendChild(table);
+
+        cardInner.appendChild(cardBody);
+        card.appendChild(cardInner);
+
+        return card;
+    }
+
+    function createSummaryCard(title, revenue, expense, isProfitable, paid, extra, salaries, invoiced) {
+        const card = document.createElement('div');
+        card.classList.add('col-lg-12', 'grid-margin', 'stretch-card');
+
+        const cardInner = document.createElement('div');
+        cardInner.classList.add('card');
+
+        const cardBody = document.createElement('div');
+        cardBody.classList.add('card-body');
+
+        const cardTitle = document.createElement('h4');
+        cardTitle.classList.add('card-title');
+        cardTitle.textContent = title;
+
+        const cardText = document.createElement('p');
+        cardText.classList.add('card-text');
+        cardText.classList.add('font-weight-bold');
+        cardText.classList.add('text-dark');
+        cardText.innerHTML = `
+            Product Invoiced : ${invoiced}<br>
+            Paid By Customer : ${paid}<br>
+            Total ExtraIncome :${extra}<br>
+            Total Revenue : ${revenue}<br>
+            <hr>
+
+            Salary Paid : ${salaries}<br>
+            Other Expense : ${expense-salaries}<br>
+            Total Expense : ${expense}<br>
+            <span class="badge ${isProfitable ? 'badge-success' : 'badge-danger'}">
+                ${isProfitable ? 'Profitable' : 'Loss'}
+            </span>
+        `;
+
+        cardBody.appendChild(cardTitle);
+        cardBody.appendChild(cardText);
+
+        cardInner.appendChild(cardBody);
+        card.appendChild(cardInner);
+
+        return card;
+    }
+});
+
+    
 </script>
 @endsection

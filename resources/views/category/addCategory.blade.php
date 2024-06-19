@@ -24,7 +24,7 @@
             <div class="form-group row">
                 <label for="status" class="col-sm-3 col-form-label">Status</label>
                 <div class="col-sm-9">
-                    <select class="form-control" id="status" name="status">
+                    <select class="form-control custom-select" id="status" name="status">
                         <option value="{{config('status.active')}}">Active</option>
                         <option value="{{config('status.inactive')}}">Inactive</option>
                     </select>
