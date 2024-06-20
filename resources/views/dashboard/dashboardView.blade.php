@@ -25,6 +25,9 @@
                 <li class="nav-item">
                     <a class="nav-link" id="conversion-tab" data-bs-toggle="tab" href="#conversion-1" role="tab" aria-selected="false">Monthly Report</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="product-tab" data-bs-toggle="tab" href="#product-1" role="tab" aria-selected="false">Product Report</a>
+                </li>
             </ul>
             <div class="d-md-block d-none">
                 <a href="#" class="text-light p-1"><i class="mdi mdi-view-dashboard"></i></a>
@@ -205,6 +208,30 @@
         </div>
     </div>
     <div class="row mt-4" id="reportResults">
+        <!-- Report results will be displayed here -->
+    </div>
+</div>
+
+<div class="tab-pane fade" id="product-1" role="tabpanel" aria-labelledby="product-tab">
+    <div class="card">
+        <div class="card-body">
+            <form id="productReportForm" class="row">
+                <div class="form-group col-md-10">
+                    <select id="productSelect" class="form-control custom-select">
+                        
+                        <option value="" disabled selected>Select Product</option>
+                        @foreach($products as $product)
+                        <option value='{{ $product->id }}' >{{$product->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <button type="button" class="btn btn-rounded btn-success btn-lg" id="generateProductReportBtn" style="background-color: green !important;">Generate Report</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row mt-4" id="productReportResults">
         <!-- Report results will be displayed here -->
     </div>
 </div>
@@ -429,6 +456,59 @@
     }
 });
 
+$(document).ready(function() {
+        $('#generateProductReportBtn').on('click', function() {
+            var productId = $('#productSelect').val();
+            if (productId) {
+                $.ajax({
+                    url: '/generateProductReport',
+                    type: 'GET',
+                    data: { product_id: productId },
+                    success: function(data) {
+                        displayProductReport(data);
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                    }
+                });
+            } else {
+                alert('Please select a product');
+            }
+        });
+
+        function displayProductReport(data) {
+            var reportResults = $('#productReportResults');
+            reportResults.empty();
+
+            var productInfo = `
+                <h4>${data.product_name}</h4>
+                <p>Available Quantity: <span class="badge badge-success">${data.available_quantity}</span></p>
+            `;
+            reportResults.append(productInfo);
+
+            if (data.orderItems.length > 0) {
+                var table = $('<table>').addClass('table table-striped');
+                var thead = $('<thead>');
+                var trHead = $('<tr>');
+                trHead.append('<th>Date</th><th>Quantity</th>');
+                thead.append(trHead);
+                table.append(thead);
+
+                var tbody = $('<tbody>');
+                data.orderItems.forEach(function(item) {
+                    var tr = $('<tr>');
+                    tr.append('<td>' + new Date(item.created_at).toLocaleDateString() + '</td>');
+                    tr.append('<td>' + item.quantity + '</td>');
+                    tbody.append(tr);
+                });
+
+                table.append(tbody);
+                reportResults.append(table);
+            } else {
+                reportResults.append('<p>No sales data available for this product.</p>');
+            }
+        }
+    });
     
 </script>
 @endsection

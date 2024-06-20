@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Expense;
 use App\Models\ExtraIncome;
 use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\Product;
 use App\Models\Salary;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -117,6 +119,8 @@ class DashboardController extends Controller
         ->orderByDesc('order_count')
         ->get();
 
+        $products = Product::latest()->get();
+
         
     
         return view('dashboard.dashboardView', [
@@ -127,7 +131,8 @@ class DashboardController extends Controller
             'orders' => $orders,
             'paid' => $paid,
             'due' => $due,
-            'customers' => $customers
+            'customers' => $customers,
+            'products' => $products,
         ]);
     }
 
@@ -183,6 +188,25 @@ class DashboardController extends Controller
             'extraIncomes' => $extraIncomes,
             'salaries' => $salaries
         ]);
+    }
+
+    public function generateProductReport(Request $request)
+    {
+        $productId = $request->input('product_id');
+        $product = Product::with('orderItems')->find($productId);
+
+        if ($product) {
+            $availableQuantity = $product->quantity;
+            $orderItems = OrderItem::where('product_id', $productId)->get(['created_at', 'quantity']);
+
+            return response()->json([
+                'product_name' => $product->name,
+                'available_quantity' => $availableQuantity,
+                'orderItems' => $orderItems
+            ]);
+        } else {
+            return response()->json(['error' => 'Product not found'], 404);
+        }
     }
     
     
