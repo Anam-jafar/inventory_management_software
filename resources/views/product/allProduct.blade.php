@@ -4,7 +4,10 @@
 <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
+            <div class="row">
             <h4 class="card-title">Product list</h4>
+            <h4>Total Value :  <span class="badge badge-success">{{ $totalValue }} Tk.</span></h4>
+            </div>
             <div class="row mb-3">
                 <!-- Items per page dropdown -->
                 <div class="col-md-2">
@@ -48,6 +51,7 @@
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Category</th>
+                        <th>Total Value</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -59,6 +63,7 @@
                         <td>{{ $product->price }}</td>
                         <td>{{ $product->quantity }}</td>
                         <td>{{ $product->category->name }}</td>
+                        <td><b>{{$product->quantity*$product->price}} Tk.</b></td>
                         <td>
                             <label class="badge badge-{{ $product->status ? 'success' : 'danger' }}">
                                 {{ $product->status ? 'Active' : 'Inactive' }}

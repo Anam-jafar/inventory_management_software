@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\ExtraIncome;
 use App\Models\Product;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -19,9 +20,11 @@ class ProductController extends Controller
         if($query){
             $productsQuery->where('name', 'like', '%'.$query.'%');
         }
+        $totalValue = Product::sum(DB::raw('price * quantity')); 
+
 
         $products = $productsQuery->paginate($perPage);
-        return view('product.allProduct', compact('products', 'query', 'perPage'));
+        return view('product.allProduct', compact('products', 'query', 'perPage', 'totalValue'));
     }
     
     
