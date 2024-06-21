@@ -4,7 +4,11 @@
 <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
+            <div class="row">
             <h4 class="card-title">Customer list</h4>
+            <h4>Total Due :  <span class="badge badge-danger">{{ $total_due }} Tk.</span></h4>
+            </div>
+            
             <div class="row mb-3">
                 <!-- Items per page dropdown -->
                 <div class="col-md-2">
@@ -46,7 +50,6 @@
                     <tr>
                         <th>Name</th>
                         <th>Contact</th>
-                        <th>Total Invoiced Amount</th>
                         <th>Due</th>
                         <th>Action</th>
                     </tr>
@@ -56,8 +59,7 @@
                     <tr>
                         <td>{{ $customer->name }}</td>
                         <td>{{ $customer->contact }}</td>
-                        <td>{{ $customer->total_invoiced_amount }}</td>
-                        <td>{{ $customer->due }}</td>
+                        <td><span class="badge badge-danger">{{ $customer->due }} Tk. </span></td>
 
                         <td>
                             <div class="dropdown dropdown-arrow-none">

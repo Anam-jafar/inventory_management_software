@@ -11,16 +11,18 @@ class CustomerController extends Controller
     public function allCustomer(Request $request)
     {
         $query = $request->input('query');
-        $perPage = $request->input('perPage', 5);
+        $perPage = $request->input('perPage', 10);
 
         $customersQuery = Customer::where('deleted', '!=', config('deleted'))->latest();
+
+        $total_due = Customer::where('deleted', '!==', config('app.deleted'))->sum('due');
 
         if($query){
             $customersQuery->where('name', 'like', '%'.$query.'%');
         }
 
         $customers = $customersQuery->paginate($perPage);
-        return view('customer.allCustomer', compact('customers', 'query', 'perPage'));
+        return view('customer.allCustomer', compact('customers', 'query', 'perPage', 'total_due'));
     }
 
     public function viewCustomer($id = null, Request $request){

@@ -64,6 +64,18 @@ class DashboardController extends Controller
                 'total_amount' => $expense->total_amount
             ];
         });
+
+        $monthlySales = DB::table('orders')
+        ->select(
+            DB::raw('YEAR(created_at) as year'),
+            DB::raw('MONTH(created_at) as month'),
+            DB::raw('SUM(total_amount) as total_amount'),
+            DB::raw('SUM(total_paid) as total_paid')
+        )
+        ->groupBy('year', 'month')
+        ->orderBy('year', 'asc')
+        ->orderBy('month', 'asc')
+        ->get();
     
         return response()->json([
             'products' => $products,
@@ -73,6 +85,7 @@ class DashboardController extends Controller
             'orders' => $orders,
             'paid' => $paid,
             'due' => $due,
+            'monthlySales' => $monthlySales
         ]);
     }
 
@@ -119,7 +132,19 @@ class DashboardController extends Controller
         ->orderByDesc('order_count')
         ->get();
 
-        $products = Product::latest()->get();
+        $products_ = Product::latest()->get();
+
+        $monthlySales = DB::table('orders')
+        ->select(
+            DB::raw('YEAR(created_at) as year'),
+            DB::raw('MONTH(created_at) as month'),
+            DB::raw('SUM(total_amount) as total_amount'),
+            DB::raw('SUM(total_paid) as total_paid')
+        )
+        ->groupBy('year', 'month')
+        ->orderBy('year', 'asc')
+        ->orderBy('month', 'asc')
+        ->get();
 
         
     
@@ -132,7 +157,8 @@ class DashboardController extends Controller
             'paid' => $paid,
             'due' => $due,
             'customers' => $customers,
-            'products' => $products,
+            'products_' => $products_,
+            'monthlySales' => $monthlySales
         ]);
     }
 
@@ -193,16 +219,26 @@ class DashboardController extends Controller
     public function generateProductReport(Request $request)
     {
         $productId = $request->input('product_id');
-        $product = Product::with('orderItems')->find($productId);
+        $product = Product::with('orderitem')->find($productId);
 
         if ($product) {
             $availableQuantity = $product->quantity;
-            $orderItems = OrderItem::where('product_id', $productId)->get(['created_at', 'quantity']);
+            $orderItems = OrderItem::where('product_id', $productId)
+                            ->with(['order.customer'])
+                            ->get();
+
+            $orderItemsData = $orderItems->map(function($item) {
+                return [
+                    'date' => $item->updated_at,
+                    'quantity' => $item->quantity,
+                    'customer_name' => $item->order->customer->name ?? 'N/A'
+                ];
+            });
 
             return response()->json([
                 'product_name' => $product->name,
                 'available_quantity' => $availableQuantity,
-                'orderItems' => $orderItems
+                'orderItems' => $orderItemsData
             ]);
         } else {
             return response()->json(['error' => 'Product not found'], 404);

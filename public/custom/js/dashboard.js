@@ -1,92 +1,57 @@
-document.addEventListener("DOMContentLoaded", function() {
-    // Access the embedded data
-    var products = window.dashboardData.products;
-    var expenses = window.dashboardData.expenses;
-
-    // Prepare product data for the chart
-    var productLabels = products.map(product => product.product_name);
-    var productData = products.map(product => product.total_quantity);
-
-    // Prepare expense data for the chart
-    var expenseLabels = expenses.map(expense => expense.type);
-    var expenseData = expenses.map(expense => expense.total_amount);
-
-    // Function to generate random color
-    function getRandomColor() {
-        var letters = '0123456789ABCDEF';
-        var color = '#';
-        for (var i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
+$(document).ready(function() {
+    // Use the embedded data directly
+    if (typeof monthlySales !== 'undefined') {
+        renderMonthlySalesChart(monthlySales);
+    } else {
+        console.error('monthlySales data is not defined');
     }
 
-    // Generate random colors for the charts
-    var productBackgroundColors = productLabels.map(() => getRandomColor());
-    var productBorderColors = productBackgroundColors.map(color => color);
+    function renderMonthlySalesChart(data) {
+        const labels = data.map(item => `${item.year}-${item.month}`);
+        const totalAmountData = data.map(item => item.total_amount);
+        const totalPaidData = data.map(item => item.total_paid);
 
-    var expenseBackgroundColors = expenseLabels.map(() => getRandomColor());
-    var expenseBorderColors = expenseBackgroundColors.map(color => color);
-
-    // Product Pie Chart
-    var ctxProduct = document.getElementById('productPieChart').getContext('2d');
-    var productPieChart = new Chart(ctxProduct, {
-        type: 'pie',
-        data: {
-            labels: productLabels,
-            datasets: [{
-                label: 'Quantity Sold',
-                data: productData,
-                backgroundColor: productBackgroundColors,
-                borderColor: productBorderColors,
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    display: false // Ensure the legend is hidden
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(tooltipItem) {
-                            return tooltipItem.label + ': ' + tooltipItem.raw;
+        const ctx = document.getElementById('monthlySalesChart').getContext('2d');
+        const monthlySalesChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Total Amount Invoiced',
+                        data: totalAmountData,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        fill: true,
+                    },
+                    {
+                        label: 'Total Amount Paid',
+                        data: totalPaidData,
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        fill: true,
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        type: 'category',
+                        title: {
+                            display: true,
+                            text: 'Month'
                         }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Amount'
+                        },
+                        beginAtZero: true
                     }
                 }
             }
-        }
-    });
-
-    // Expense Pie Chart
-    var ctxExpense = document.getElementById('ExpensePieChart').getContext('2d');
-    var expensePieChart = new Chart(ctxExpense, {
-        type: 'pie',
-        data: {
-            labels: expenseLabels,
-            datasets: [{
-                label: 'Amount Spent',
-                data: expenseData,
-                backgroundColor: expenseBackgroundColors,
-                borderColor: expenseBorderColors,
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    display: false // Ensure the legend is hidden
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(tooltipItem) {
-                            return tooltipItem.label + ': ' + tooltipItem.raw;
-                        }
-                    }
-                }
-            }
-        }
-    });
+        });
+    }
 });

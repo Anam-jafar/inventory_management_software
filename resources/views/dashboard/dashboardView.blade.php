@@ -125,25 +125,16 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="users-1" role="tabpanel" aria-labelledby="users-tab">
-            <div class="row d-flex justify-content-around">
-                    <!-- elements -->
-                    <div class="col-xl-5 col-lg-6 col-sm-6 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body text-center">
-                                <canvas id="productPieChart" width="400" height="400"></canvas>
-                            </div>
-                        </div>
+        <div class="row d-flex justify-content-around">
+            <div class="col-xl-10 col-lg-10 col-sm-10 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <canvas id="monthlySalesChart" width="800" height="400"></canvas>
                     </div>
-                    <div class="col-xl-5 col-lg-6 col-sm-6 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body text-center">
-                                <canvas id="ExpensePieChart" width="400" height="400"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- elements -->
                 </div>
             </div>
+        </div>
+    </div>
             <div class="tab-pane fade" id="performance-1" role="tabpanel" aria-labelledby="performance-tab">
             <div class="row">
                 <div class="col-lg-12 grid-margin stretch-card">
@@ -220,7 +211,7 @@
                     <select id="productSelect" class="form-control custom-select">
                         
                         <option value="" disabled selected>Select Product</option>
-                        @foreach($products as $product)
+                        @foreach($products_ as $product)
                         <option value='{{ $product->id }}' >{{$product->name}}</option>
                         @endforeach
                     </select>
@@ -231,9 +222,17 @@
             </form>
         </div>
     </div>
-    <div class="row mt-4" id="productReportResults">
-        <!-- Report results will be displayed here -->
+    <br>
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="row mt-4" id="productReportResults">
+                    <!-- Report results will be displayed here -->
+                </div>
+            </div>
+        </div>
     </div>
+
 </div>
 
 
@@ -244,9 +243,11 @@
 <script>
 
     // Embed the data into the HTML
+    const monthlySales = <?php echo json_encode($monthlySales); ?>;
     window.dashboardData = {
       products: <?php echo json_encode($products); ?>,
-      expenses: <?php echo json_encode($expenses); ?>
+      expenses: <?php echo json_encode($expenses); ?>,
+      
     };
     // Function to load dashboard data based on the selected period
     function loadDashboardData(period) {
@@ -457,58 +458,60 @@
 });
 
 $(document).ready(function() {
-        $('#generateProductReportBtn').on('click', function() {
-            var productId = $('#productSelect').val();
-            if (productId) {
-                $.ajax({
-                    url: '/generateProductReport',
-                    type: 'GET',
-                    data: { product_id: productId },
-                    success: function(data) {
-                        displayProductReport(data);
-                    },
-                    error: function(error) {
-                        console.error('Error:', error);
-                    }
-                });
-            } else {
-                alert('Please select a product');
-            }
-        });
-
-        function displayProductReport(data) {
-            var reportResults = $('#productReportResults');
-            reportResults.empty();
-
-            var productInfo = `
-                <h4>${data.product_name}</h4>
-                <p>Available Quantity: <span class="badge badge-success">${data.available_quantity}</span></p>
-            `;
-            reportResults.append(productInfo);
-
-            if (data.orderItems.length > 0) {
-                var table = $('<table>').addClass('table table-striped');
-                var thead = $('<thead>');
-                var trHead = $('<tr>');
-                trHead.append('<th>Date</th><th>Quantity</th>');
-                thead.append(trHead);
-                table.append(thead);
-
-                var tbody = $('<tbody>');
-                data.orderItems.forEach(function(item) {
-                    var tr = $('<tr>');
-                    tr.append('<td>' + new Date(item.created_at).toLocaleDateString() + '</td>');
-                    tr.append('<td>' + item.quantity + '</td>');
-                    tbody.append(tr);
-                });
-
-                table.append(tbody);
-                reportResults.append(table);
-            } else {
-                reportResults.append('<p>No sales data available for this product.</p>');
-            }
+    $('#generateProductReportBtn').on('click', function() {
+        var productId = $('#productSelect').val();
+        if (productId) {
+            $.ajax({
+                url: '/generateProductReport',
+                type: 'GET',
+                data: { product_id: productId },
+                success: function(data) {
+                    displayProductReport(data);
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                }
+            });
+        } else {
+            alert('Please select a product');
         }
     });
+
+    function displayProductReport(data) {
+        var reportResults = $('#productReportResults');
+        reportResults.empty();
+
+        var productInfo = `
+            <h4>${data.product_name}</h4>
+            <p>Available Quantity: <span class="badge badge-success">${data.available_quantity}</span></p>
+        `;
+        reportResults.append(productInfo);
+
+        if (data.orderItems.length > 0) {
+            var table = $('<table>').addClass('table table-striped');
+            var thead = $('<thead>');
+            var trHead = $('<tr>');
+            trHead.append('<th>Date</th><th>Customer Name</th><th>Quantity</th>');
+            thead.append(trHead);
+            table.append(thead);
+
+            var tbody = $('<tbody>');
+            data.orderItems.forEach(function(item) {
+                var tr = $('<tr>');
+                tr.append('<td>' + new Date(item.date).toLocaleDateString() + '</td>');
+                tr.append('<td>' + item.customer_name + '</td>');
+                tr.append('<td>' + item.quantity + '</td>');
+                tbody.append(tr);
+            });
+
+            table.append(tbody);
+            reportResults.append(table);
+        } else {
+            reportResults.append('<p>No sales data available for this product.</p>');
+        }
+    }
+});
+
     
 </script>
 @endsection
