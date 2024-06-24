@@ -6,7 +6,7 @@
         <div class="card-body">
             <div class="row">
             <h4 class="card-title">Customer list</h4>
-            <h4>Total Due :  <span class="badge badge-danger">{{ $total_due }} Tk.</span></h4>
+            <h4 class="card-title">Total Due :  <span class="badge badge-danger">{{ $total_due }} Tk.</span></h4>
             </div>
             
             <div class="row mb-3">

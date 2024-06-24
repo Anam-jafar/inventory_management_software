@@ -37,8 +37,9 @@
             <div class="form-group row">
                 <label for="price" class="col-sm-3 col-form-label">Price</label>
                 <div class="col-sm-3">
-                    <input type="number" class="form-control" id="price" placeholder="Price" name="price">
+                    <input type="number" class="form-control" id="price" placeholder="Price" name="price" step="0.01">
                 </div>
+
                 <label for="quantity" class="col-sm-3 col-form-label">Quantity</label>
                 <div class="col-sm-3">
                     <input type="number" class="form-control" id="quantity" placeholder="Quantity" name="quantity">

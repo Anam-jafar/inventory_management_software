@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->unsignedBigInteger('category_id');
-            $table->integer('price');
+            $table->float('price', 8, 2);
             $table->integer('quantity');
             $table->integer('restock_limit')->nullable(true);
             $table->string('description')->nullable(true);
