@@ -1,6 +1,7 @@
 # Inventory Management System
 
 Welcome to the Inventory Management System! This application is designed to help manage your inventory, employees, customers, expenses, and orders efficiently. The system also provides a comprehensive business dashboard and various analytical features to help you make informed business decisions.
+[Watch the demo video here](https://youtu.be/PkdFf9av9ho)
 
 ## Features
 
