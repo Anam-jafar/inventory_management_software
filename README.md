@@ -36,10 +36,7 @@ Welcome to the Inventory Management System! This application is designed to help
 - Redis
 - Node.js and npm
 
-### Setup
-
-1. **Clone the repository**
-```bash
-   git clone https://github.com/your-username/inventory-management-system.git
-   cd inventory-management-system
-```
+Author : Anam Ibn Jafar
+Email : anamibnjafar@gmail.com
+                      
+  
